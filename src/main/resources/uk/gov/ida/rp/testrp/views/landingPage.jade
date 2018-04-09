@@ -1,0 +1,68 @@
+extends layout/layout
+
+block vars
+  - pageTitle = "Register for an identity profile - GOV.UK"
+  - bodyClass = "home"
+  - showRelatedContent = true
+
+block h1
+  | Register for an identity profile
+
+block content
+  article(role="article")
+    .summary
+      p This is a service to test registration to the Identity Assurance Programme. This service has been set up to allow certified companies to trial their customer registration and sign-in process.
+    h2 Before you start
+    p You should know that:
+    ul
+      li you will be creating a real identity profile with a certified company.
+      li the identity profile you create can be used to access government services online once they start to use the Identity Assurance service.
+      li to create your identity profile you will need to verify your identity online with a certified company.
+    form(action='/test-rp/success', method='get')
+      p
+        input.no-match(type="checkbox", name="no-match")
+        | Should not match user? (user account creation)
+
+      p
+        input.fail-account-creation(type="checkbox", name="fail-account-creation")
+        | Should fail account creation?
+
+      p
+        input#loa1-rp(type="checkbox", name="loa1-rp", onclick='setLoa()')
+        | Use LoA1 test RP?
+
+      p
+        input#forceauthn-noc3-rp(type="checkbox", name="forceauthn-noc3-rp", onclick='setNoc3()')
+        | Use ForceAuthn and no-cycle3 test RP?
+
+      p
+        label(for="rp-name") Overridden RP Name
+        input#rp-name(type="textbox", name="rp-name")
+      p
+        input.button.get-started(type="submit", value="Start")
+
+      if shouldShowStartWithEidasButton
+        p
+          button.button.get-started-with-eidas(type="submit", value="true", name="eidas") Start with your European eID
+  script.
+    function setLoa() {
+      if (document.getElementById("loa1-rp").checked) {
+        document.getElementById("rp-name").value = 'loa1-test-rp'
+      } else {
+        document.getElementById("rp-name").value = ''
+      }
+    }
+    function setNoc3() {
+      if (document.getElementById("forceauthn-noc3-rp").checked) {
+        document.getElementById("rp-name").value = 'test-rp-noc3'
+      } else {
+        document.getElementById("rp-name").value = ''
+      }
+    }
+
+block relatedContent
+  h2 More about identity assurance
+  nav
+    ul(role="navigation")
+      include layout/side_links
+

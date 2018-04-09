@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<md:EntitiesDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" validUntil="2116-10-07T12:06:06.749Z">
+    <md:EntityDescriptor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" entityID="http://www.test-rp-ms.gov.uk/SAML2/MD" xsi:type="md:EntityDescriptorType">
+        <md:AttributeAuthorityDescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+            <md:KeyDescriptor use="signing" xsi:type="md:KeyDescriptorType">
+                <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xsi:type="ds:KeyInfoType">
+                    <ds:KeyName>http://www.test-rp-ms.gov.uk/SAML2/MD</ds:KeyName>
+                    <ds:X509Data xsi:type="ds:X509DataType">
+                        <ds:X509Certificate>MIID4jCCAsqgAwIBAgIUVmxSLSJ03W40Mpr8lj/UiNzhyPAwDQYJKoZIhvcNAQEL
+                            BQAwdDELMAkGA1UEBhMCR0IxDzANBgNVBAgTBkxvbmRvbjEPMA0GA1UEBxMGTG9u
+                            ZG9uMRcwFQYDVQQKEw5DYWJpbmV0IE9mZmljZTEMMAoGA1UECxMDR0RTMRwwGgYD
+                            VQQDExNJREEgSW50ZXIgUlAgQ0EgRGV2MCAXDTE2MDcwNjE2MjcwMFoYDzIxMTYw
+                            NjEyMTYyNzAwWjB+MQswCQYDVQQGEwJHQjEPMA0GA1UECBMGTG9uZG9uMQ8wDQYD
+                            VQQHEwZMb25kb24xFzAVBgNVBAoTDkNhYmluZXQgT2ZmaWNlMQwwCgYDVQQLEwNH
+                            RFMxJjAkBgNVBAMTHUlEQSBTYW1wbGUgUlAgTVNBIFNpZ25pbmcgRGV2MIIBIjAN
+                            BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyUcvLD2eixwv/fWPqqlgDmSXxx0i
+                            FnGiqBxcxVCrlBKwFqBOmJ7NFcx8NvhEr1iO/iwa4t5AzPfEN37UWWQY7J90AZK/
+                            cRYWvx/3e1mxZS+fYZPYNb2Wh3n8Ovw1LrqnnVX4POfiy8dM1cjFypJwYWdikUf/
+                            vs+larhnxVCwbdMQALeJ46ic8egJdWgthTorT0oNeJ3fHK0npr9oBfluyaoHVuJj
+                            3AZvfAc+098po+/C2rqFPVl/YBACl15Z1grhgBBLJapy7iFdbM9qVHEfg0gEtQf8
+                            IUgkkbGVF6NbomgWw4yRsAyVCeu/DVZanwub4HufXaCjA/5RYwZI3mTgzwIDAQAB
+                            o2AwXjAOBgNVHQ8BAf8EBAMCB4AwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQUndee
+                            ISg7X8CWsHEI1RPqUuJl+JIwHwYDVR0jBBgwFoAUThFT/TxT0jSd7ljOIUs0NTwr
+                            rs0wDQYJKoZIhvcNAQELBQADggEBAD4KoFGHCDTkfYr1XJJ94NuTzLIiMJWrHCEN
+                            JUjre71qwFcGWPgX5YEYaPkkPeGzIp8XYJpIy9S1DmVvdayiZrYPk3LlJFyASVfR
+                            rwICueBD8K+JXxv8CaCS/8ut0xOLVdRA5iwXaiXlX5v0TsFrMLBbm39TJfEOUalO
+                            NksAi8Iz1IZxGib4QkISDFxYbB7GHPnlTT/3EDUNoWmeMtJTsTTN+P5aL4I2lA9C
+                            GOtkwITOKOXlV/iZNkbG+cg7MyO9hWM9Lo+FcdHv9TkDQriQlQKjn6Q50gr2B0oc
+                            AAVi+5uIG3GUoP29n0Z4GcLKUSIbK93cvnj5xP9RbI1KB6uPFmM=</ds:X509Certificate>
+                    </ds:X509Data>
+                </ds:KeyInfo>
+            </md:KeyDescriptor>
+            <md:KeyDescriptor use="encryption" xsi:type="md:KeyDescriptorType">
+                <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xsi:type="ds:KeyInfoType">
+                    <ds:KeyName>http://www.test-rp-ms.gov.uk/SAML2/MD</ds:KeyName>
+                    <ds:X509Data xsi:type="ds:X509DataType">
+                        <ds:X509Certificate>MIIEbjCCA1agAwIBAgIQeUFOH7EmWQ8Ff5xa1wiT7TANBgkqhkiG9w0BAQsFADBZ
+                            MQswCQYDVQQGEwJHQjEXMBUGA1UEChMOQ2FiaW5ldCBPZmZpY2UxDDAKBgNVBAsT
+                            A0dEUzEjMCEGA1UEAxMaSURBUCBSZWx5aW5nIFBhcnR5IFRlc3QgQ0EwHhcNMTUw
+                            ODI3MDAwMDAwWhcNMTcwODI2MjM1OTU5WjCBijELMAkGA1UEBhMCR0IxDzANBgNV
+                            BAgTBkxvbmRvbjEPMA0GA1UEBxMGTG9uZG9uMRcwFQYDVQQKFA5DYWJpbmV0IE9m
+                            ZmljZTEMMAoGA1UECxQDR0RTMTIwMAYDVQQDEylTYW1wbGUgUlAgTVNBIEVuY3J5
+                            cHRpb24gKDIwMTUwODI3MTAyNTU4KTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCC
+                            AQoCggEBAMEFti29GIGsoyKl+yyP1rrltT1SnaE3OyxBxV32BC7fajvNGaG+J28s
+                            gG4VZuQWMLPswKaxnr+ZQCMu9f6b+ud41K/wJzVlIlB48lQhuIXN+dC/j/KfkZgI
+                            Smt6sh1wNTSG1aj/w5hLI1EeUS4vVHWI296YvixIkjri2uq0uJLQ32/oTBIgYHc2
+                            xUDjWKhAwVLfAYCu4Uw6BqWjwD6K/QagpIWNC2CV4yr1B5TqaR2j8BLPrWFIhiZy
+                            iyCep+Qa5gWJdQrWruri9gnoaZNzxePdnWAIrVisDTyOgsMuctw7TbY0GpW33mIN
+                            qKTT3fNm4oJAIXlenIpX/bxw97pwC3cCAwEAAaOB/zCB/DAMBgNVHRMBAf8EAjAA
+                            MGEGA1UdHwRaMFgwVqBUoFKGUGh0dHA6Ly9vbnNpdGVjcmwudHJ1c3R3aXNlLmNv
+                            bS9DYWJpbmV0T2ZmaWNlSURBUFJlbHlpbmdQYXJ0eVRlc3RDQS9MYXRlc3RDUkwu
+                            Y3JsMA4GA1UdDwEB/wQEAwIFIDAdBgNVHQ4EFgQU0jBUa3rmPi3XN/UY/MJqBvNg
+                            4+YwHwYDVR0jBBgwFoAU3eT1XRoKDzrRSCIeTsD4bjb2xSUwOQYIKwYBBQUHAQEE
+                            LTArMCkGCCsGAQUFBzABhh1odHRwOi8vc3RkLW9jc3AudHJ1c3R3aXNlLmNvbTAN
+                            BgkqhkiG9w0BAQsFAAOCAQEAk4e5777wujfq00YCWaroJME9Wu5yEytMSJw2rcCD
+                            7ySwxzG1xLNJyjqurrN0xomGIxV7Lgp81LyNDvxDWCU7cZhau7DO+QIEbliZx8h5
+                            fXr8JZHYNPC82QreHSiBXBwtf9SSwrtCjXB1ipDPX6MYwZPxDhFzpQN5nXGHsWmI
+                            QxWreVoalo3rehUviNyR0s16j4yvVuJUdMOZ+4+41eyXoMpc9pnZ2kj53gm1SMoG
+                            KvU09U3dtqGBNZctPfmAEbaUB9adbOblMERsGm0imtX7NmTUlGLdnl3mrHLC+hsZ
+                            yAzblHo7BKWkKlxZiaa4neDQaJ3lrf5H9GHr/gXhoohI0A==</ds:X509Certificate>
+                    </ds:X509Data>
+                </ds:KeyInfo>
+            </md:KeyDescriptor>
+            <md:AttributeService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="http://localhost:50210/matching-service/POST"/>
+        </md:AttributeAuthorityDescriptor>
+        <md:IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol" xsi:type="md:IDPSSODescriptorType">
+            <md:KeyDescriptor use="signing" xsi:type="md:KeyDescriptorType">
+                <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xsi:type="ds:KeyInfoType">
+                    <ds:KeyName>http://www.test-rp-ms.gov.uk/SAML2/MD</ds:KeyName>
+                    <ds:X509Data xsi:type="ds:X509DataType">
+                        <ds:X509Certificate>MIID4jCCAsqgAwIBAgIUVmxSLSJ03W40Mpr8lj/UiNzhyPAwDQYJKoZIhvcNAQEL
+                            BQAwdDELMAkGA1UEBhMCR0IxDzANBgNVBAgTBkxvbmRvbjEPMA0GA1UEBxMGTG9u
+                            ZG9uMRcwFQYDVQQKEw5DYWJpbmV0IE9mZmljZTEMMAoGA1UECxMDR0RTMRwwGgYD
+                            VQQDExNJREEgSW50ZXIgUlAgQ0EgRGV2MCAXDTE2MDcwNjE2MjcwMFoYDzIxMTYw
+                            NjEyMTYyNzAwWjB+MQswCQYDVQQGEwJHQjEPMA0GA1UECBMGTG9uZG9uMQ8wDQYD
+                            VQQHEwZMb25kb24xFzAVBgNVBAoTDkNhYmluZXQgT2ZmaWNlMQwwCgYDVQQLEwNH
+                            RFMxJjAkBgNVBAMTHUlEQSBTYW1wbGUgUlAgTVNBIFNpZ25pbmcgRGV2MIIBIjAN
+                            BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyUcvLD2eixwv/fWPqqlgDmSXxx0i
+                            FnGiqBxcxVCrlBKwFqBOmJ7NFcx8NvhEr1iO/iwa4t5AzPfEN37UWWQY7J90AZK/
+                            cRYWvx/3e1mxZS+fYZPYNb2Wh3n8Ovw1LrqnnVX4POfiy8dM1cjFypJwYWdikUf/
+                            vs+larhnxVCwbdMQALeJ46ic8egJdWgthTorT0oNeJ3fHK0npr9oBfluyaoHVuJj
+                            3AZvfAc+098po+/C2rqFPVl/YBACl15Z1grhgBBLJapy7iFdbM9qVHEfg0gEtQf8
+                            IUgkkbGVF6NbomgWw4yRsAyVCeu/DVZanwub4HufXaCjA/5RYwZI3mTgzwIDAQAB
+                            o2AwXjAOBgNVHQ8BAf8EBAMCB4AwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQUndee
+                            ISg7X8CWsHEI1RPqUuJl+JIwHwYDVR0jBBgwFoAUThFT/TxT0jSd7ljOIUs0NTwr
+                            rs0wDQYJKoZIhvcNAQELBQADggEBAD4KoFGHCDTkfYr1XJJ94NuTzLIiMJWrHCEN
+                            JUjre71qwFcGWPgX5YEYaPkkPeGzIp8XYJpIy9S1DmVvdayiZrYPk3LlJFyASVfR
+                            rwICueBD8K+JXxv8CaCS/8ut0xOLVdRA5iwXaiXlX5v0TsFrMLBbm39TJfEOUalO
+                            NksAi8Iz1IZxGib4QkISDFxYbB7GHPnlTT/3EDUNoWmeMtJTsTTN+P5aL4I2lA9C
+                            GOtkwITOKOXlV/iZNkbG+cg7MyO9hWM9Lo+FcdHv9TkDQriQlQKjn6Q50gr2B0oc
+                            AAVi+5uIG3GUoP29n0Z4GcLKUSIbK93cvnj5xP9RbI1KB6uPFmM=</ds:X509Certificate>
+                    </ds:X509Data>
+                </ds:KeyInfo>
+            </md:KeyDescriptor>
+            <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:50300/SAML2/SSO" xsi:type="md:EndpointType"/>
+        </md:IDPSSODescriptor>
+    </md:EntityDescriptor>
+    <md:EntityDescriptor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="VERIFY-HUB" entityID="https://signin.service.gov.uk" xsi:type="md:EntityDescriptorType">
+        <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol" xsi:type="md:SPSSODescriptorType">
+            <md:KeyDescriptor use="encryption" xsi:type="md:KeyDescriptorType">
+                <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xsi:type="ds:KeyInfoType">
+                    <ds:KeyName xmlns:xs="http://www.w3.org/2001/XMLSchema">https://signin.service.gov.uk</ds:KeyName>
+                    <ds:X509Data xsi:type="ds:X509DataType">
+                        <ds:X509Certificate>MIIESjCCAzKgAwIBAgIQHNr5Y95pusW5U7IMGmMIPTANBgkqhkiG9w0BAQsFADBL
+                            MQswCQYDVQQGEwJHQjEXMBUGA1UEChMOQ2FiaW5ldCBPZmZpY2UxDDAKBgNVBAsT
+                            A0dEUzEVMBMGA1UEAxMMSURBUCBUZXN0IENBMB4XDTE1MDgyNzAwMDAwMFoXDTE3
+                            MDgyNjIzNTk1OVowgYAxCzAJBgNVBAYTAkdCMQ8wDQYDVQQIEwZMb25kb24xDzAN
+                            BgNVBAcTBkxvbmRvbjEXMBUGA1UEChQOQ2FiaW5ldCBPZmZpY2UxDDAKBgNVBAsU
+                            A0dEUzEoMCYGA1UEAxMfSFVCIEVuY3J5cHRpb24gKDIwMTUwODI2MTI1NDAzKTCC
+                            ASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAK3Im2mGeN/0age7BCcOOq92
+                            4Gyo6Djv/mTKJ7uMquYvyHtALsyhwQlKL3oA0kX4gOxanDubi37+2cPTxcokYvd+
+                            Wm5IK75pG5NbWJRp0APaxFK2FtZf7V5IVa1dJeWIyN7tsKW7e7UnXgSvAW5I8/fv
+                            KTSYMS6QxnmTuRTkRVIhB2ron7hS+QRiqjimaKDidvR1nCCeYVZGavD6qtvqntvS
+                            GUp3iFpY939SD8xZ5FDMTf4PtD1zJUGmtJkPruv+AWyzM6mxXWO4E2H0dNSTNvaY
+                            4VNIYmG1ozNL58jYVD09vV7wdr+FA/05dGwtiDsb44WTIp6bil9VYhod06wdNWUC
+                            AwEAAaOB8zCB8DAMBgNVHRMBAf8EAjAAMFUGA1UdHwROMEwwSqBIoEaGRGh0dHA6
+                            Ly9vbnNpdGVjcmwudHJ1c3R3aXNlLmNvbS9DYWJpbmV0T2ZmaWNlSURBUFRlc3RD
+                            QS9MYXRlc3RDUkwuY3JsMA4GA1UdDwEB/wQEAwIFIDAdBgNVHQ4EFgQURSJ+ft4M
+                            bJ+U4/PBv3UIV3GHdPYwHwYDVR0jBBgwFoAUahFNZFDf3mNvV6GIH/gDlQ4iBLQw
+                            OQYIKwYBBQUHAQEELTArMCkGCCsGAQUFBzABhh1odHRwOi8vc3RkLW9jc3AudHJ1
+                            c3R3aXNlLmNvbTANBgkqhkiG9w0BAQsFAAOCAQEAA780jdoDtadXEDWa1RQUmpfP
+                            Dz4hOqSjOS8oYzUlaWVgypPxTeh47arudYSVgID9wNmCsmflqBNh7JSOpLfzsF5e
+                            13c/gX6SU3GAR/oA6XL09BgP6Pf9MF/r0qDggzvUilGErMhL7DmJ28QPih8XT+2H
+                            BzISJpxB+wc8s+7gaTc4W50XQIz3xaHPkHeT4cOA0ckTiOVA1p6pMXUGQcybWf7P
+                            9IGvQi4Wxhk+/co/Kzlhfwa+jsMF1RP5UzD+U4JEjW+FT78NbFNNc4afe5gRd74O
+                            xkWozoTppHrfsoY9WOkuAlsQMKCog+rpwyT26GioXSBd+Pi5oAkZEcCBvDXpEg==</ds:X509Certificate>
+                    </ds:X509Data>
+                </ds:KeyInfo>
+            </md:KeyDescriptor>
+            <md:KeyDescriptor use="signing" xsi:type="md:KeyDescriptorType">
+                <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xsi:type="ds:KeyInfoType">
+                    <ds:KeyName xmlns:xs="http://www.w3.org/2001/XMLSchema">https://signin.service.gov.uk</ds:KeyName>
+                    <ds:X509Data xsi:type="ds:X509DataType">
+                        <ds:X509Certificate>MIID1TCCAr2gAwIBAgIUJAKLyc/EjwbL3a1GWCGsoLnqpAcwDQYJKoZIhvcNAQEL
+                            BQAwcTELMAkGA1UEBhMCR0IxDzANBgNVBAgTBkxvbmRvbjEPMA0GA1UEBxMGTG9u
+                            ZG9uMRcwFQYDVQQKEw5DYWJpbmV0IE9mZmljZTEMMAoGA1UECxMDR0RTMRkwFwYD
+                            VQQDExBJREFQIENvcmUgQ0EgRGV2MCAXDTE2MDcwNjE2MjcwMFoYDzIxMTYwNjEy
+                            MTYyNzAwWjB0MQswCQYDVQQGEwJHQjEPMA0GA1UECBMGTG9uZG9uMQ8wDQYDVQQH
+                            EwZMb25kb24xFzAVBgNVBAoTDkNhYmluZXQgT2ZmaWNlMQwwCgYDVQQLEwNHRFMx
+                            HDAaBgNVBAMTE0lEQSBIdWIgU2lnbmluZyBEZXYwggEiMA0GCSqGSIb3DQEBAQUA
+                            A4IBDwAwggEKAoIBAQDN81oVRbOT+wndETnEhjGsk3J4wkp8omzs0qWlo8y9oBVE
+                            nSy80izYJs+YHehsv8+Ym2qG7cehe/rBOKaoJxuX0bz2OWaj3gh2XR5yMfY1xJoW
+                            3bNpib5YM5tXy3vyWUcH6t8zltJWTKMRK3n6PVwMLDs+fCxAsadUgwaCQAOIQAh7
+                            nPJV0jaU4H/1f/SCw69M0jAAt4lxUtB2lm2Xn4PUkmSf5m/ZgXocVRNFE/fpnlFu
+                            PWVv9tjO77pTqXi9yE4cX4Tk+5xQnk+e9p/7uFGKI2DdS3IUVjc0Bnd0n/xjzTxb
+                            CcAge4wqsjX44c6T+Qha6eI5Ka3EB6j9T0eG9nfRAgMBAAGjYDBeMA4GA1UdDwEB
+                            /wQEAwIHgDAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBR5uZ7+9d5Xi+MxV2TMYI3a
+                            lPBzADAfBgNVHSMEGDAWgBSMYlTeIQ+jYKUdcTsAIe2dUofovTANBgkqhkiG9w0B
+                            AQsFAAOCAQEAUHEa1pnIPd1IY+EvBqEds8278gH0GF5VBpPIHRCNW32xdjj0o7tK
+                            BCHKbaEiHOKkYWDTpTTQuVGNEfv98u46Z625T5da3wBSbvCabn1heNfY65ggyrlU
+                            DCPqff4v+M9doFltV2aTVxPXyNqHMLodGPWf/mcPlW+W/B7QLtk5ykoZ2d4wBDPQ
+                            vyZFc8ABvhDjMvrp70OLntN+baMRRYK7tKv6TgHpY42snPUl/aeHZjp3FdqvJwDr
+                            Xak87mgORXCl+YeGKI7kCYwKsPPjr24XbUVE3qfWye+nB7FIjQMarS6CThwav/m+
+                            Rj4Z5TZOvZ9+JqrlNR90Hh6kXkw5xEGZpg==</ds:X509Certificate>
+                    </ds:X509Data>
+                </ds:KeyInfo>
+            </md:KeyDescriptor>
+            <md:KeyDescriptor use="signing" xsi:type="md:KeyDescriptorType">
+                <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xsi:type="ds:KeyInfoType">
+                    <ds:KeyName xmlns:xs="http://www.w3.org/2001/XMLSchema">https://signin.service.gov.uk/another-key</ds:KeyName>
+                    <ds:X509Data xsi:type="ds:X509DataType">
+                        <ds:X509Certificate>MIIERjCCAy6gAwIBAgIQduox6jrRdJ3RjXW4po1xKzANBgkqhkiG9w0BAQsFADBL
+                            MQswCQYDVQQGEwJHQjEXMBUGA1UEChMOQ2FiaW5ldCBPZmZpY2UxDDAKBgNVBAsT
+                            A0dEUzEVMBMGA1UEAxMMSURBUCBUZXN0IENBMB4XDTE1MDgyNzAwMDAwMFoXDTE3
+                            MDgyNjIzNTk1OVowfTELMAkGA1UEBhMCR0IxDzANBgNVBAgTBkxvbmRvbjEPMA0G
+                            A1UEBxMGTG9uZG9uMRcwFQYDVQQKFA5DYWJpbmV0IE9mZmljZTEMMAoGA1UECxQD
+                            R0RTMSUwIwYDVQQDExxIVUIgU2lnbmluZyAoMjAxNTA4MjYxMjU0MjEpMIIBIjAN
+                            BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA469b0ts/BA+YufxHGJSaCEdqaNvp
+                            EGAukMk0zgDwGiyA/Rx+urM7VOEQUFngD8urH5lGjfzf9yQLsQeq090HSJhs535A
+                            QE4HJ2V0/vj8hCRS3qOp61cBqd+tlJpAypLTwJwNzvpJvVPoVHN5ste2AnPjxpfn
+                            FozOH/+V7DeiA8iSSzQzqXktT0tILiubPmbCggjyDtf0e5FHdoeHwNhcOHZld7P5
+                            CB7cKTS/nAoLokTaX1fPeoI/qSGoL+IikUYveACKPs0S+upB5J/IAaLjRbpWbS3x
+                            fn8Gl1cA+mgeYz1qMtJmilla5dOcX1FrDa/DVL85I8P+pub5V/S/6L1AGQIDAQAB
+                            o4HzMIHwMAwGA1UdEwEB/wQCMAAwVQYDVR0fBE4wTDBKoEigRoZEaHR0cDovL29u
+                            c2l0ZWNybC50cnVzdHdpc2UuY29tL0NhYmluZXRPZmZpY2VJREFQVGVzdENBL0xh
+                            dGVzdENSTC5jcmwwDgYDVR0PAQH/BAQDAgeAMB0GA1UdDgQWBBTFB8gNC1GV+Jas
+                            m4CZQrccMIEz6zAfBgNVHSMEGDAWgBRqEU1kUN/eY29XoYgf+AOVDiIEtDA5Bggr
+                            BgEFBQcBAQQtMCswKQYIKwYBBQUHMAGGHWh0dHA6Ly9zdGQtb2NzcC50cnVzdHdp
+                            c2UuY29tMA0GCSqGSIb3DQEBCwUAA4IBAQAxWna2Nq9jcV4AiQvDXaEmdsAY24Pg
+                            Du+gDyKm0KNtKSnKUzYhYqCyILd+yHPYg3zaiWKDjgkMMnLJeAktcUWk+pEgf5OF
+                            QV8KDg/zlj/886P5pJzTqcESMnV4yHuTZUKeu/6DwI+0Ugv3J3JMyh+tBqFWzXDo
+                            FFpsGjPTlYI3aNdZ0QNr3ElEKeI9W8sE/aCsnZDCkxQAphGyp4hVmuFGV+Vm7OUD
+                            ULoa9oW6jiFzXNNRYvFEDTu5mSvMdlYq5XLZEKmK4MBCAJp/4LAs7mCirExUsfGo
+                            +ObVs/MJBa0wWyiU/BfXbAXBlyURDzAd4eu/VSC1p4YQe+GY5Pui+GM8</ds:X509Certificate>
+                    </ds:X509Data>
+                </ds:KeyInfo>
+            </md:KeyDescriptor>
+            <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:50300/SAML2/SSO/Response/POST" index="1" isDefault="true" xsi:type="md:IndexedEndpointType"/>
+        </md:SPSSODescriptor>
+        <md:Organization xsi:type="md:OrganizationType">
+            <md:OrganizationName xml:lang="en-GB" xsi:type="md:localizedNameType">GOV.UK</md:OrganizationName>
+            <md:OrganizationDisplayName xml:lang="en-GB" xsi:type="md:localizedNameType">GOV.UK</md:OrganizationDisplayName>
+            <md:OrganizationURL xml:lang="en-GB" xsi:type="md:localizedURIType">https://www.gov.uk</md:OrganizationURL>
+        </md:Organization>
+    </md:EntityDescriptor>
+</md:EntitiesDescriptor>

@@ -1,0 +1,49 @@
+buildscript {
+    repositories {
+        maven {
+            url 'https://artifactory.ida.digital.cabinet-office.gov.uk/artifactory/whitelisted-repos/'
+        }
+    }
+    dependencies {
+        classpath 'uk.gov.ida:ida-gradle:1.1.0-10'
+    }
+}
+
+import uk.gov.ida.RunConfig
+apply plugin: 'idea'
+
+idea {
+    project {
+        jdkName = '1.8'
+        languageLevel = '1.8'
+    }
+
+    workspace {
+        iws {
+            withXml { provider ->
+
+                def runconfig = new RunConfig(provider)
+
+                runconfig.ensureApplicationConfigurationExists(
+                        'TestRp',
+                        'uk.gov.ida.rp.testrp.*',
+                        'uk.gov.ida.rp.testrp.TestRpApplication',
+                        'test-rp',
+                        'server configuration/test-rp.yml')
+                [
+                        50132:'Remote TestRp'
+                ].each { port, service ->
+                    runconfig.ensureDebugConfigurationExists(service, port.toString())
+                }
+            }
+        }
+    }
+
+    module {
+        //if you love browsing Javadoc
+        downloadJavadoc = true
+
+        //and love reading sources :)
+        downloadSources = true
+    }
+}

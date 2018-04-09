@@ -1,0 +1,74 @@
+server:
+  applicationConnectors:
+    - type: http
+      port: ${TEST_RP_PORT}
+  adminConnectors:
+    - type: http
+      port: 50131
+  requestLog:
+    appenders:
+      - type: console
+
+logging:
+  level: INFO
+  appenders:
+    - type: console
+
+transactionHost: http://localhost:${TEST_RP_PORT}
+dontCacheFreemarkerTemplates: true
+
+cookieName: test-rp-session
+
+saml:
+  entityId: ${TEST_RP_ENTITY_ID}
+  expectedDestination: http://localhost
+
+httpClient:
+  timeout: 2s
+  timeToLive: 10m
+  cookiesEnabled: false
+  connectionTimeout: 1s
+
+msaMetadataUri: ${MSA_METADATA_URL}
+
+allowInsecureMetadataLocation: true
+
+msaEntityId: ${MSA_ENTITY_ID:-"http://dev-rp-ms.local/SAML2/MD"}
+
+hubEntityId: https://dev-hub.local
+
+forceAuthentication: false
+
+serviceInfo:
+  name: "test-rp"
+
+privateSigningKeyConfiguration:
+  key: ${TEST_RP_SIGNING_KEY}
+
+publicSigningCert:
+  cert: ${TEST_RP_SIGNING_CERT}
+  name: someId
+
+privateEncryptionKeyConfiguration:
+  key: ${TEST_RP_ENCRYPTION_KEY}
+
+publicEncryptionCert:
+  cert: ${TEST_RP_ENCRYPTION_CERT}
+  name: someId
+
+clientTrustStoreConfiguration:
+  type: encoded
+  store: ${HUB_TRUST_STORE}
+  password: ${HUB_TRUST_STORE_PASSWORD:-marshmallow}
+
+javascriptPath: /assets/javascripts
+stylesheetsPath: /assets/stylesheets
+imagesPath: /assets/images
+
+privateBetaUserAccessRestrictionEnabled: ${IDA_TESTRP_TOKENSERVICE_ENABLED:-"false"}
+
+tokenServiceUrl: ${IDA_TESTRP_TOKENSERVICE_URL:-"http://localhost:53100"}
+tokenServiceUser: ${IDA_TESTRP_TOKENSERVICE_USER:-"UserA"}
+tokenServicePassword: ${IDA_TESTRP_TOKENSERVICE_PASSWORD:-"NotTheRealUserAPassword"}
+
+shouldShowStartWithEidasButton: true

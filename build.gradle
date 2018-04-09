@@ -1,0 +1,198 @@
+buildscript {
+    repositories {
+        maven { url 'https://artifactory.ida.digital.cabinet-office.gov.uk/artifactory/whitelisted-repos/' }
+    }
+    dependencies {
+        classpath 'uk.gov.ida:ida-gradle:1.1.0-20',
+                  'com.github.ben-manes:gradle-versions-plugin:0.15.0'
+    }
+}
+
+
+plugins {
+      id "org.sonarqube" version "2.2.1"
+}
+
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'idaSonar'
+
+group = "uk.gov.ida"
+version = "0.1.$version"
+
+idaSonar {
+    name = 'ida-sample-rp-sonar'
+}
+
+apply from: 'idea.gradle'
+apply plugin: 'idea'
+
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'idaJar'
+apply plugin: 'idea'
+apply plugin: 'application'
+
+repositories {
+    maven { url 'https://artifactory.ida.digital.cabinet-office.gov.uk/artifactory/whitelisted-repos/' }
+}
+
+def dependencyVersions = [
+        ida_utils:317,
+        dropwizard:'1.2.0',
+        dropwizard_jade:10511,
+        ida_test_utils: '2.0.0-38',
+        ida_dev_pki: '1.1.0-20',
+        saml_serializers: '3.3.0-26',
+        saml_security: '3.3.0-49',
+        opensaml_version: '3.3.0',
+        saml_metadata_bindings: '3.3.0-73',
+        hub_saml: '3.3.0-93',
+        saml_extensions: '3.3.0-1.2a-36',
+        stub_idp_saml: '3.3.0-58',
+        saml_domain_objects: '3.3.0-37',
+        saml_test_utils: '3.3.0-31',
+]
+
+configurations {
+    common
+    dropwizard
+    frontend
+    ida_utils
+    jade
+    ida_test_utils
+    soap
+    saml
+    saml_test
+    test_deps
+    test_deps_compile
+}
+
+configurations.all {
+    resolutionStrategy {
+        // dropwizard-testing uses 2.2.0 but our libraries currently only work with 1.6.0.
+        force "org.assertj:assertj-core:1.6.0",
+              "org.glassfish.hk2:hk2-api:2.4.0-b31",
+              "org.glassfish.hk2:hk2-locator:2.4.0-b31",
+              "org.glassfish.hk2.external:javax.inject:2.4.0-b31"
+    }
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+dependencies {
+
+    common 'com.google.guava:guava:19.0',
+            'org.slf4j:slf4j-api:1.7.10',
+            //need this to be fixed - https://github.com/Squarespace/jersey2-guice/pull/39
+            'com.hubspot.dropwizard:dropwizard-guicier:1.0.0.6',
+            'com.squarespace.jersey2-guice:0-jersey2-guice-spi:1.0.6'
+
+    dropwizard 'io.dropwizard:dropwizard-core:' + dependencyVersions.dropwizard,
+            'io.dropwizard:dropwizard-client:' + dependencyVersions.dropwizard,
+            'io.dropwizard:dropwizard-auth:' + dependencyVersions.dropwizard,
+            'io.dropwizard:dropwizard-configuration:' + dependencyVersions.dropwizard,
+            'io.dropwizard:dropwizard-metrics-graphite:' + dependencyVersions.dropwizard
+
+    frontend 'io.dropwizard:dropwizard-assets:' + dependencyVersions.dropwizard,
+            'io.dropwizard:dropwizard-views-freemarker:' + dependencyVersions.dropwizard,
+            'io.dropwizard:dropwizard-views:' + dependencyVersions.dropwizard,
+            'org.freemarker:freemarker:2.3.27-incubating',
+            'org.jsoup:jsoup:1.6.1'
+
+    ida_utils   "uk.gov.ida:common-utils:2.0.0-$dependencyVersions.ida_utils",
+            "uk.gov.ida:rest-utils:2.0.0-$dependencyVersions.ida_utils",
+            "uk.gov.ida:security-utils:2.0.0-$dependencyVersions.ida_utils"
+
+    jade "uk.gov.ida:dropwizard-jade:2.0.0-$dependencyVersions.dropwizard_jade"
+
+    ida_test_utils "uk.gov.ida:common-test-utils:$dependencyVersions.ida_test_utils"
+
+    saml "org.opensaml:opensaml-core:$dependencyVersions.opensaml_version",
+            "org.opensaml:opensaml-saml-impl:$dependencyVersions.opensaml_version",
+            "uk.gov.ida:ida-saml-extensions:$dependencyVersions.saml_extensions",
+            "uk.gov.ida:saml-serializers:$dependencyVersions.saml_serializers",
+            "uk.gov.ida:saml-security:$dependencyVersions.saml_security",
+            "uk.gov.ida:saml-metadata-bindings:$dependencyVersions.saml_metadata_bindings",
+            "uk.gov.ida:stub-idp-saml:$dependencyVersions.stub_idp_saml",
+            "uk.gov.ida:hub-saml:$dependencyVersions.hub_saml",
+            "uk.gov.ida:hub-saml-test-utils:$dependencyVersions.hub_saml",
+            "uk.gov.verify:saml-domain-objects:$dependencyVersions.saml_domain_objects",
+            "uk.gov.verify:saml-test-utils:$dependencyVersions.saml_test_utils"
+
+    saml_test "uk.gov.ida:ida-saml-extensions-test:$dependencyVersions.saml_extensions",
+            "uk.gov.ida:saml-metadata-bindings-test:$dependencyVersions.saml_metadata_bindings",
+
+            soap('org.apache.ws.commons:ws-commons-util:1.0.1') { transitive = false }
+
+    test_deps 'org.mockito:mockito-core:2.7.6',
+            'junit:junit:4.11',
+            'org.hamcrest:hamcrest-library:1.3',
+            'org.assertj:assertj-joda-time:1.1.0',
+            'org.assertj:assertj-core:1.6.0',
+            "uk.gov.ida:ida-dev-pki:$dependencyVersions.ida_dev_pki"
+
+
+    testCompile configurations.ida_test_utils,
+            configurations.saml_test,
+            configurations.test_deps_compile,
+            "uk.gov.ida:hub-saml:$dependencyVersions.hub_saml",
+            "uk.gov.ida:hub-saml-test-utils:$dependencyVersions.hub_saml",
+            "uk.gov.ida:ida-dev-pki:$dependencyVersions.ida_dev_pki",
+            'junit:junit:4.11',
+            'org.mockito:mockito-core:1.9.5',
+            "io.dropwizard:dropwizard-testing:$dependencyVersions.dropwizard",
+            'org.assertj:assertj-guava:1.1.0',
+            'org.assertj:assertj-joda-time:1.1.0'
+
+    compile configurations.common,
+            configurations.dropwizard,
+            configurations.ida_utils,
+            configurations.frontend,
+            configurations.jade,
+            configurations.saml {
+                exclude group: 'uk.gov.ida', module: 'dropwizard-saml'
+            }
+
+    [
+            "io.dropwizard:dropwizard-testing:$dependencyVersions.dropwizard",
+            'com.thoughtworks.inproctester:jerseytester-htmlunit:1.0.3',
+            'com.thoughtworks.inproctester:jerseytester-webdriver:1.0.3',
+    ].each { dep ->
+        test_deps_compile(dep) { transitive = false }
+    }
+            testCompile "com.github.tomakehurst:wiremock-standalone:2.5.0"
+}
+
+sourceSets {
+    integrationTest {
+        java {
+            srcDir 'src/integration-test/java'
+        }
+        resources {
+            srcDir 'src/integration-test/resources'
+        }
+        compileClasspath += sourceSets.main.runtimeClasspath
+        compileClasspath += sourceSets.test.runtimeClasspath
+        compileClasspath += sourceSets.test.output
+    }
+}
+
+task intTest(type: Test) {
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath += sourceSets.integrationTest.runtimeClasspath
+}
+
+ext.mainclass = 'uk.gov.ida.rp.testrp.TestRpApplication'
+mainClassName = ext.mainclass
+
+task copyToLib(dependsOn: jar, type: Copy) {
+    into "$buildDir/output/lib"
+    from configurations.runtime
+}
+
+task zip(dependsOn: copyToLib, type: Zip) {
+    from "$buildDir/output"
+}
+
+task(outputDependencies) doLast {
+    println "ida_utils="+dependencyVersions.ida_utils
+}
