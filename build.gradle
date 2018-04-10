@@ -3,34 +3,17 @@ buildscript {
         maven { url 'https://artifactory.ida.digital.cabinet-office.gov.uk/artifactory/whitelisted-repos/' }
     }
     dependencies {
-        classpath 'uk.gov.ida:ida-gradle:1.1.0-20',
-                  'com.github.ben-manes:gradle-versions-plugin:0.15.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
     }
 }
 
-
-plugins {
-      id "org.sonarqube" version "2.2.1"
-}
-
 apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'idaSonar'
 
 group = "uk.gov.ida"
-version = "0.1.$version"
-
-idaSonar {
-    name = 'ida-sample-rp-sonar'
-}
-
-apply from: 'idea.gradle'
-apply plugin: 'idea'
+version = "${System.env.BUILD_NUMBER ?: 'SNAPSHOT'}"
 
 apply plugin: 'java'
 apply plugin: 'jacoco'
-apply plugin: 'idaJar'
-apply plugin: 'idea'
-apply plugin: 'application'
 
 repositories {
     maven { url 'https://artifactory.ida.digital.cabinet-office.gov.uk/artifactory/whitelisted-repos/' }
@@ -177,10 +160,16 @@ task intTest(type: Test) {
     classpath += sourceSets.integrationTest.runtimeClasspath
 }
 
-ext.mainclass = 'uk.gov.ida.rp.testrp.TestRpApplication'
-mainClassName = ext.mainclass
-
-jar.baseName = 'ida-sample-rp'
+jar {
+    archiveName = "ida-sample-rp.jar"
+    destinationDir = file(new File("$buildDir/output"))
+    manifest {
+        attributes(
+                "Main-Class": 'uk.gov.ida.rp.testrp.TestRpApplication',
+                "Class-Path": configurations.compile.collect { "lib/"+it.getName() }.join(' ')
+        )
+    }
+}
 
 task copyToLib(dependsOn: jar, type: Copy) {
     into "$buildDir/output/lib"
