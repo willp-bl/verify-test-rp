@@ -1,22 +1,21 @@
 package uk.gov.ida.rp.testrp.builders;
 
-import com.google.common.base.Optional;
 import uk.gov.ida.saml.core.domain.AuthnContext;
 import uk.gov.ida.saml.core.domain.FraudDetectedDetails;
 import uk.gov.ida.saml.core.domain.PassthroughAssertion;
 import uk.gov.ida.saml.core.domain.PersistentId;
 
-import static com.google.common.base.Optional.absent;
-import static com.google.common.base.Optional.fromNullable;
+import java.util.Optional;
+
 import static uk.gov.ida.saml.core.test.builders.PersistentIdBuilder.aPersistentId;
 
 public class PassthroughAssertionBuilder {
 
     private PersistentId persistentId = aPersistentId().build();
-    private Optional<AuthnContext> authnContext = fromNullable(AuthnContext.LEVEL_1);
+    private Optional<AuthnContext> authnContext = Optional.of(AuthnContext.LEVEL_1);
     private String underlyingAssertion = "blob";
-    private Optional<FraudDetectedDetails> fraudDetectedDetails = absent();
-    private Optional<String> principalIpAddress = fromNullable("principal-ip-address");
+    private Optional<FraudDetectedDetails> fraudDetectedDetails = Optional.empty();
+    private Optional<String> principalIpAddress = Optional.of("principal-ip-address");
 
     public static PassthroughAssertionBuilder aPassthroughAssertion() {
         return new PassthroughAssertionBuilder();
@@ -28,7 +27,7 @@ public class PassthroughAssertionBuilder {
                 authnContext,
                 underlyingAssertion,
                 fraudDetectedDetails,
-                Optional.absent());
+                Optional.empty());
     }
 
     public PassthroughAssertion buildAuthnStatementAssertion() {
@@ -43,10 +42,10 @@ public class PassthroughAssertionBuilder {
     public PassthroughAssertion buildMatchingDatasetAssertion() {
         return new PassthroughAssertion(
                 persistentId,
-                Optional.absent(),
+                Optional.empty(),
                 underlyingAssertion,
                 fraudDetectedDetails,
-                Optional.absent());
+                Optional.empty());
     }
 
     public PassthroughAssertionBuilder withPersistentId(PersistentId persistentId) {
@@ -60,7 +59,7 @@ public class PassthroughAssertionBuilder {
     }
 
     public PassthroughAssertionBuilder withAuthnContext(AuthnContext authnContext) {
-        this.authnContext = fromNullable(authnContext);
+        this.authnContext = Optional.ofNullable(authnContext);
         return this;
     }
     public String buildMatchingDatasetAssertionAsString() {
@@ -72,12 +71,12 @@ public class PassthroughAssertionBuilder {
     }
 
     public PassthroughAssertionBuilder withFraudDetectedDetails(FraudDetectedDetails fraudDetectedDetails) {
-        this.fraudDetectedDetails = fromNullable(fraudDetectedDetails);
+        this.fraudDetectedDetails = Optional.ofNullable(fraudDetectedDetails);
         return this;
     }
 
     public PassthroughAssertionBuilder withPrincipalIpAddressSeenByIdp(String principalIpAddress) {
-        this.principalIpAddress = fromNullable(principalIpAddress);
+        this.principalIpAddress = Optional.ofNullable(principalIpAddress);
         return this;
     }
 }

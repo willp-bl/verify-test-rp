@@ -36,21 +36,20 @@ repositories {
     maven { url 'https://artifactory.ida.digital.cabinet-office.gov.uk/artifactory/whitelisted-repos/' }
 }
 
+ext {
+    opensaml = '3.3.0'
+}
+
 def dependencyVersions = [
         ida_utils:317,
         dropwizard:'1.2.0',
         dropwizard_jade:10511,
         ida_test_utils: '2.0.0-38',
         ida_dev_pki: '1.1.0-20',
-        saml_serializers: '3.3.0-26',
-        saml_security: '3.3.0-49',
-        opensaml_version: '3.3.0',
-        saml_metadata_bindings: '3.3.0-73',
-        hub_saml: '3.3.0-93',
-        saml_extensions: '3.3.0-1.2a-36',
-        stub_idp_saml: '3.3.0-58',
-        saml_domain_objects: '3.3.0-37',
-        saml_test_utils: '3.3.0-31',
+        opensaml_version: "$opensaml",
+        saml_libs_version: "$opensaml-109",
+        hub_saml: '3.3.0-123',
+        stub_idp_saml: '3.3.0-68'
 ]
 
 configurations {
@@ -108,18 +107,15 @@ dependencies {
 
     saml "org.opensaml:opensaml-core:$dependencyVersions.opensaml_version",
             "org.opensaml:opensaml-saml-impl:$dependencyVersions.opensaml_version",
-            "uk.gov.ida:ida-saml-extensions:$dependencyVersions.saml_extensions",
-            "uk.gov.ida:saml-serializers:$dependencyVersions.saml_serializers",
-            "uk.gov.ida:saml-security:$dependencyVersions.saml_security",
-            "uk.gov.ida:saml-metadata-bindings:$dependencyVersions.saml_metadata_bindings",
+            "uk.gov.ida:saml-extensions:$dependencyVersions.saml_libs_version",
+            "uk.gov.ida:saml-serializers:$dependencyVersions.saml_libs_version",
+            "uk.gov.ida:saml-security:$dependencyVersions.saml_libs_version",
+            "uk.gov.ida:saml-metadata-bindings:$dependencyVersions.saml_libs_version",
             "uk.gov.ida:stub-idp-saml:$dependencyVersions.stub_idp_saml",
             "uk.gov.ida:hub-saml:$dependencyVersions.hub_saml",
-            "uk.gov.ida:hub-saml-test-utils:$dependencyVersions.hub_saml",
-            "uk.gov.verify:saml-domain-objects:$dependencyVersions.saml_domain_objects",
-            "uk.gov.verify:saml-test-utils:$dependencyVersions.saml_test_utils"
+            "uk.gov.ida:hub-saml-test-utils:$dependencyVersions.hub_saml"
 
-    saml_test "uk.gov.ida:ida-saml-extensions-test:$dependencyVersions.saml_extensions",
-            "uk.gov.ida:saml-metadata-bindings-test:$dependencyVersions.saml_metadata_bindings",
+    saml_test "uk.gov.ida:saml-metadata-bindings-test:$dependencyVersions.saml_libs_version",
 
             soap('org.apache.ws.commons:ws-commons-util:1.0.1') { transitive = false }
 
