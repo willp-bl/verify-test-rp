@@ -52,11 +52,11 @@ public class AuthnResponseReceiverHandler {
             if (idpResponse.getAttributes().isPresent()) {
                 // display real attributes contined within the saml response
                 List<String> attributes = getAttributes(idpResponse);
-                return new ResponseFromHub(idpResponse.getStatus(), attributes, Optional.empty(), Optional.ofNullable(session), relayState, idpResponse.getAuthnContext().toJavaUtil());
+                return new ResponseFromHub(idpResponse.getStatus(), attributes, Optional.empty(), Optional.ofNullable(session), relayState, idpResponse.getAuthnContext());
             }
 
             URI location = session.getPathUserWasTryingToAccess();
-            return new ResponseFromHub(idpResponse.getStatus(), ImmutableList.of(), Optional.ofNullable(location), Optional.ofNullable(session), relayState, idpResponse.getAuthnContext().toJavaUtil());
+            return new ResponseFromHub(idpResponse.getStatus(), ImmutableList.of(), Optional.ofNullable(location), Optional.ofNullable(session), relayState, idpResponse.getAuthnContext());
         }
         // not success, not a new user, no relay state
         return new ResponseFromHub(idpResponse.getStatus(), ImmutableList.of(), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());

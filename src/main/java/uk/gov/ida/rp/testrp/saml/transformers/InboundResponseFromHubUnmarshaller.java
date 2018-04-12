@@ -1,6 +1,5 @@
 package uk.gov.ida.rp.testrp.saml.transformers;
 
-import com.google.common.base.Optional;
 import org.opensaml.saml.saml2.core.Assertion;
 import org.opensaml.saml.saml2.core.Attribute;
 import org.opensaml.saml.saml2.core.AttributeStatement;
@@ -17,9 +16,7 @@ import uk.gov.ida.saml.security.validators.ValidatedResponse;
 
 import java.net.URI;
 import java.util.List;
-
-import static com.google.common.base.Optional.absent;
-import static com.google.common.base.Optional.fromNullable;
+import java.util.Optional;
 
 /*
 * Used by the fake relying parties, so there is a bit of dodgyness here.
@@ -36,17 +33,17 @@ public class InboundResponseFromHubUnmarshaller {
     }
 
     public InboundResponseFromHub fromSaml(ValidatedResponse validatedResponse, ValidatedAssertions validatedAssertions) {
-        Optional<PersistentId> persistentId = absent();
-        Optional<List<Attribute>> attributes = absent();
-        Optional<AuthnContext> authnContext = absent();
+        Optional<PersistentId> persistentId = Optional.empty();
+        Optional<List<Attribute>> attributes = Optional.empty();
+        Optional<AuthnContext> authnContext = Optional.empty();
 
         for (Assertion assertion : validatedAssertions.getAssertions()) {
             PassthroughAssertion outboundAssertion = passthroughAssertionUnmarshaller.fromAssertion(assertion);
             List<AttributeStatement> attributeStatements = assertion.getAttributeStatements();
             if (attributeStatements.size() == 1) {
-                attributes = fromNullable(attributeStatements.get(0).getAttributes());
+                attributes = Optional.ofNullable(attributeStatements.get(0).getAttributes());
             }
-            persistentId = fromNullable(outboundAssertion.getPersistentId());
+            persistentId = Optional.ofNullable(outboundAssertion.getPersistentId());
             authnContext = outboundAssertion.getAuthnContext();
         }
 

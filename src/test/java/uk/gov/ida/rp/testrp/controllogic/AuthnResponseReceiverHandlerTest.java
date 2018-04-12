@@ -1,7 +1,5 @@
 package uk.gov.ida.rp.testrp.controllogic;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
 import com.squarespace.jersey2.guice.JerseyGuiceUtils;
 import org.joda.time.DateTime;
 import org.junit.Before;
@@ -23,11 +21,11 @@ import uk.gov.ida.saml.idp.stub.domain.InboundResponseFromHub;
 
 import java.net.URI;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
-import static java.util.Optional.empty;
-import static java.util.Optional.ofNullable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.opensaml.core.config.InitializationService.initialize;
@@ -53,8 +51,8 @@ public class AuthnResponseReceiverHandlerTest {
             REQUEST_ID,
             URI.create("pathUserWasTryingToAccess"),
             ISSUER,
-            ofNullable(1),
-            empty(),
+            Optional.of(1),
+            Optional.empty(),
             false,
             false,
             false,
@@ -74,11 +72,11 @@ public class AuthnResponseReceiverHandlerTest {
 
     @Test
     public void testSuccessResponse() {
-        InboundResponseFromHub inboundResponseFromHub = new InboundResponseFromHub(RESPONSE_ID, DateTime.now(), REQUEST_ID, ISSUER, DESTINATION, Optional.absent(), TransactionIdaStatus.Success, Optional.of(new PersistentId("persistentId")), Optional.of(AuthnContext.LEVEL_2));
+        InboundResponseFromHub inboundResponseFromHub = new InboundResponseFromHub(RESPONSE_ID, DateTime.now(), REQUEST_ID, ISSUER, DESTINATION, Optional.empty(), TransactionIdaStatus.Success, Optional.of(new PersistentId("persistentId")), Optional.of(AuthnContext.LEVEL_2));
         when(samlResponseDeserialiser.apply(samlResponse)).thenReturn(inboundResponseFromHub);
-        when(sessionRepository.getSession(SESSION_ID)).thenReturn(ofNullable(SESSION));
+        when(sessionRepository.getSession(SESSION_ID)).thenReturn(Optional.ofNullable(SESSION));
 
-        final ResponseFromHub responseFromHub = authnResponseReceiverHandler.handleResponse(samlResponse, ofNullable(SESSION_ID));
+        final ResponseFromHub responseFromHub = authnResponseReceiverHandler.handleResponse(samlResponse, Optional.ofNullable(SESSION_ID));
 
         assertThat(responseFromHub.getTransactionIdaStatus()).isEqualTo(TransactionIdaStatus.Success);
         assertThat(responseFromHub.getAttributes()).isEmpty();
@@ -90,16 +88,16 @@ public class AuthnResponseReceiverHandlerTest {
 
     @Test
     public void testAccountCreationResponse() {
-        final List<Attribute> attributes = ImmutableList.of(
+        final List<Attribute> attributes = Collections.unmodifiableList(Arrays.asList(
                 anAttribute().withFirstName("bob"),
                 anAttribute().withSurname("obo"),
-                anAttribute().withAddressHistory(Arrays.asList("Aviation House", "Whitechapel building"))
-        );
-        InboundResponseFromHub inboundResponseFromHub = new InboundResponseFromHub(RESPONSE_ID, DateTime.now(), REQUEST_ID, ISSUER, DESTINATION, Optional.fromNullable(attributes), TransactionIdaStatus.Success, Optional.of(new PersistentId("persistentId")), Optional.of(AuthnContext.LEVEL_2));
+                anAttribute().withAddressHistory(Arrays.asList("Aviation House", "Whitechapel building")
+        )));
+        InboundResponseFromHub inboundResponseFromHub = new InboundResponseFromHub(RESPONSE_ID, DateTime.now(), REQUEST_ID, ISSUER, DESTINATION, Optional.ofNullable(attributes), TransactionIdaStatus.Success, Optional.of(new PersistentId("persistentId")), Optional.of(AuthnContext.LEVEL_2));
         when(samlResponseDeserialiser.apply(samlResponse)).thenReturn(inboundResponseFromHub);
-        when(sessionRepository.getSession(SESSION_ID)).thenReturn(ofNullable(SESSION));
+        when(sessionRepository.getSession(SESSION_ID)).thenReturn(Optional.ofNullable(SESSION));
 
-        final ResponseFromHub responseFromHub = authnResponseReceiverHandler.handleResponse(samlResponse, ofNullable(SESSION_ID));
+        final ResponseFromHub responseFromHub = authnResponseReceiverHandler.handleResponse(samlResponse, Optional.ofNullable(SESSION_ID));
 
         assertThat(responseFromHub.getTransactionIdaStatus()).isEqualTo(TransactionIdaStatus.Success);
         assertThat(responseFromHub.getAttributes()).hasSameSizeAs(attributes);
@@ -111,10 +109,10 @@ public class AuthnResponseReceiverHandlerTest {
 
     @Test
     public void testNonSuccessResponse() {
-        InboundResponseFromHub inboundResponseFromHub = new InboundResponseFromHub(RESPONSE_ID, DateTime.now(), REQUEST_ID, ISSUER, DESTINATION, Optional.absent(), TransactionIdaStatus.NoAuthenticationContext, Optional.absent(), Optional.absent());
+        InboundResponseFromHub inboundResponseFromHub = new InboundResponseFromHub(RESPONSE_ID, DateTime.now(), REQUEST_ID, ISSUER, DESTINATION, Optional.empty(), TransactionIdaStatus.NoAuthenticationContext, Optional.empty(), Optional.empty());
         when(samlResponseDeserialiser.apply(samlResponse)).thenReturn(inboundResponseFromHub);
 
-        final ResponseFromHub responseFromHub = authnResponseReceiverHandler.handleResponse(samlResponse, java.util.Optional.empty());
+        final ResponseFromHub responseFromHub = authnResponseReceiverHandler.handleResponse(samlResponse, Optional.empty());
 
         assertThat(responseFromHub.getTransactionIdaStatus()).isEqualTo(TransactionIdaStatus.NoAuthenticationContext);
         assertThat(responseFromHub.getAttributes()).isEmpty();

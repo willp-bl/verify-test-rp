@@ -9,7 +9,6 @@ import io.dropwizard.views.freemarker.FreemarkerViewRenderer;
 import org.opensaml.saml.metadata.resolver.MetadataResolver;
 import org.opensaml.saml.saml2.core.AuthnRequest;
 import org.opensaml.saml.saml2.core.Response;
-import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.xmlsec.algorithm.DigestAlgorithm;
 import org.opensaml.xmlsec.algorithm.SignatureAlgorithm;
 import org.opensaml.xmlsec.algorithm.descriptors.DigestSHA256;
@@ -43,19 +42,17 @@ import uk.gov.ida.rp.testrp.views.SamlAuthnRequestRedirectViewFactory;
 import uk.gov.ida.saml.core.OpenSamlXmlObjectFactory;
 import uk.gov.ida.saml.core.api.CoreTransformersFactory;
 import uk.gov.ida.saml.core.transformers.AuthnContextFactory;
-import uk.gov.ida.saml.deserializers.ElementToOpenSamlXMLObjectTransformer;
 import uk.gov.ida.saml.hub.api.HubTransformersFactory;
 import uk.gov.ida.saml.hub.domain.AuthnRequestFromTransaction;
 import uk.gov.ida.saml.hub.transformers.inbound.PassthroughAssertionUnmarshaller;
 import uk.gov.ida.saml.hub.transformers.inbound.TransactionIdaStatusUnmarshaller;
-import uk.gov.ida.saml.hub.transformers.inbound.decorators.ResponseSizeValidator;
 import uk.gov.ida.saml.hub.transformers.outbound.RequestAbstractTypeToStringTransformer;
+import uk.gov.ida.saml.hub.validators.response.common.ResponseSizeValidator;
 import uk.gov.ida.saml.idp.stub.domain.InboundResponseFromHub;
 import uk.gov.ida.saml.metadata.IdpMetadataPublicKeyStore;
 import uk.gov.ida.saml.metadata.MetadataHealthCheck;
 import uk.gov.ida.saml.metadata.MetadataRefreshTask;
 import uk.gov.ida.saml.metadata.TrustStoreConfiguration;
-import uk.gov.ida.saml.metadata.transformers.EntityDescriptorToHubIdentityProviderMetadataDtoValidatingTransformer;
 import uk.gov.ida.saml.security.AssertionDecrypter;
 import uk.gov.ida.saml.security.DecrypterFactory;
 import uk.gov.ida.saml.security.EntityToEncryptForLocator;
@@ -96,9 +93,6 @@ public class TestRpModule extends AbstractModule {
 
         bind(EntityToEncryptForLocator.class).to(TransactionHardCodedEntityToEncryptForLocator.class);
 
-        bind(IdaKeyStoreCredentialRetriever.class).in(Singleton.class);
-        bind(SignatureFactory.class).in(Singleton.class);
-
         bind(SessionRepository.class).in(Singleton.class);
 
         bind(TokenServiceClient.class);
@@ -113,6 +107,18 @@ public class TestRpModule extends AbstractModule {
 
         //must be eager singletons to be auto injected
         bind(MetadataRefreshTask.class).asEagerSingleton();
+    }
+
+    @Provides
+    @Singleton
+    public IdaKeyStoreCredentialRetriever getIdaKeyStoreCredentialRetriever(IdaKeyStore keyStore){
+        return new IdaKeyStoreCredentialRetriever(keyStore);
+    }
+
+    @Provides
+    @Singleton
+    public SignatureFactory getSignatureFactory(IdaKeyStoreCredentialRetriever keyStoreCredentialRetriever, SignatureAlgorithm signatureAlgorithm, DigestAlgorithm digestAlgorithm){
+        return new SignatureFactory(keyStoreCredentialRetriever, signatureAlgorithm, digestAlgorithm);
     }
 
     @Provides
@@ -168,18 +174,6 @@ public class TestRpModule extends AbstractModule {
     @Singleton
     private TrustStoreConfiguration getClientTrustStoreConfiguration(TestRpConfiguration configuration) {
         return configuration.getClientTrustStoreConfiguration();
-    }
-
-    @Provides
-    @Singleton
-    private ElementToOpenSamlXMLObjectTransformer<EntityDescriptor> getElementToEntityDescriptorTransformer() {
-        return hubTransformersFactory.getElementToEntityDescriptorTransformer();
-    }
-
-    @Provides
-    @Singleton
-    private EntityDescriptorToHubIdentityProviderMetadataDtoValidatingTransformer getEntityDescriptorToHubIdentityProviderMetaDataDtoTransformer(@Named("HubEntityId") String hubEntityId) {
-        return hubTransformersFactory.getEntityDescriptorToHubIdentityProviderMetadataDtoValidatingTransformer(hubEntityId);
     }
 
     @SuppressWarnings("UnusedPrivateMethod")
@@ -243,13 +237,13 @@ public class TestRpModule extends AbstractModule {
                         new AuthnContextFactory())
 
         );
+        IdaKeyStoreCredentialRetriever idaKeyStoreCredentialRetriever = new IdaKeyStoreCredentialRetriever(keyStore);
         return new SamlResponseToIdaResponseTransformer(
                 inboundResponseFromHubUnmarshaller,
                 new SamlResponseSignatureValidator(getHubMessageSignatureValidator(metadataResolver)),
                 new AssertionDecrypter(
-                        new IdaKeyStoreCredentialRetriever(keyStore),
                         new EncryptionAlgorithmValidator(),
-                        new DecrypterFactory()
+                        new DecrypterFactory().createDecrypter(idaKeyStoreCredentialRetriever.getDecryptingCredentials())
                 ),
                 new SamlAssertionsSignatureValidator(getMsaMessageSignatureValidator(metadataResolver)),
                 configuration.isHubExpectedToSignAuthnResponse()
