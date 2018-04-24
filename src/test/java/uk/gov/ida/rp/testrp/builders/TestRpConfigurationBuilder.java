@@ -32,7 +32,6 @@ public class TestRpConfigurationBuilder {
                 aJerseyClientConfiguration().build(),
                 aServiceInfo().withName("MatchingService").build(),
                 mock(TrustStoreConfiguration.class),
-                null,
                 samlConfiguration,
                 "cookie-name",
                 false,
@@ -57,7 +56,6 @@ public class TestRpConfigurationBuilder {
                 JerseyClientConfiguration httpClient,
                 ServiceInfoConfiguration serviceInfo,
                 TrustStoreConfiguration clientTrustStoreConfiguration,
-                String transactionHost,
                 SamlConfiguration saml,
                 String cookieName,
                 Boolean dontCacheFreemarkerTemplates,
@@ -77,7 +75,6 @@ public class TestRpConfigurationBuilder {
             this.serviceInfo = serviceInfo;
             this.clientTrustStoreConfiguration = clientTrustStoreConfiguration;
 
-            this.transactionHost = transactionHost;
             this.saml = saml;
             this.cookieName = cookieName;
             this.dontCacheFreemarkerTemplates = dontCacheFreemarkerTemplates;
