@@ -94,7 +94,7 @@ public class AuthnRequestSenderHandlerTest {
 
     @Test
     public void sendAuthnRequest_shouldFormatIssuerIdWithRpName() throws Exception {
-        final String issuerId = "entity-id-with-format-param-{0}";
+        final String issuerId = "entity-id-with-format-param-%s";
         final String expectedIssuerId = "entity-id-with-format-param-some-rp-name";
         ArgumentCaptor<AuthnRequestFromTransaction> captor = ArgumentCaptor.forClass(AuthnRequestFromTransaction.class);
         when(configuration.getSamlConfiguration()).thenReturn(new TestSamlConfiguration(issuerId));
@@ -108,7 +108,7 @@ public class AuthnRequestSenderHandlerTest {
 
     @Test
     public void sendAuthnRequest_shouldForceAuthenticationIfRequired() throws Exception {
-        final String issuerId = "entity-id-with-format-param-{0}";
+        final String issuerId = "entity-id-with-format-param-%s";
         ArgumentCaptor<AuthnRequestFromTransaction> captor = ArgumentCaptor.forClass(AuthnRequestFromTransaction.class);
         when(configuration.getSamlConfiguration()).thenReturn(new TestSamlConfiguration(issuerId));
         boolean forceAuthn = true;

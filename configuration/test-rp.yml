@@ -27,7 +27,7 @@ dontCacheFreemarkerTemplates: false
 cookieName: test-rp-session
 
 saml:
-  entityId: http://www.{0}.gov.uk/SAML2/MD
+  entityId: http://www.%s.gov.uk/SAML2/MD
   expectedDestination: https://${TEST_RP_HOST}
 
 httpClient:

@@ -95,11 +95,6 @@ public class TestRpConfiguration extends Configuration implements AssetCacheConf
     @NotNull
     @JsonProperty
     @Valid
-    protected String transactionHost;
-
-    @NotNull
-    @JsonProperty
-    @Valid
     protected SamlConfiguration saml;
 
     @NotNull

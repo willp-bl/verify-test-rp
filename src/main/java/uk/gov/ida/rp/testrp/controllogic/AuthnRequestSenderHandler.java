@@ -22,7 +22,7 @@ import java.net.URI;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static java.text.MessageFormat.format;
+import static java.lang.String.format;
 
 public class AuthnRequestSenderHandler {
     private final TestRpConfiguration configuration;
