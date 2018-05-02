@@ -49,6 +49,11 @@ public class MatchingServiceRequestHandler {
             return MatchingServiceResponseDto.NO_MATCH_RESPONSE;
         }
 
+        if (userMatch("Martin", "Riggs", "1970-04-12", matchingDataset ) &&
+                !matchingServiceRequestDto.getCycle3Dataset().isPresent()){
+            return MatchingServiceResponseDto.NO_MATCH_RESPONSE;
+        }
+
         if (session.isPresent() && session.get().forceLMSNoMatch()) {
             return MatchingServiceResponseDto.NO_MATCH_RESPONSE;
         }
@@ -79,7 +84,7 @@ public class MatchingServiceRequestHandler {
 
     private boolean userMatch(String firstName, String surname, String dateOfBirth, UniversalMatchingDatasetDto matchingDataset) {
         return matchingDataset.getSurnames().stream().anyMatch(s -> s.getValue().equals(surname)) &&
-            matchingDataset.getFirstName().equals(firstName) &&
+            matchingDataset.getFirstName().getValue().equals(firstName) &&
             matchingDataset.getDateOfBirth().getValue().toString().equals(dateOfBirth);
     }
 
