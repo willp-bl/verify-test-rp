@@ -35,6 +35,14 @@ block content
         input#forceauthn-noc3-rp(type="checkbox", name="forceauthn-noc3-rp", onclick='setNoc3()')
         | Use ForceAuthn and no-cycle3 test RP?
 
+      p 
+        label(for="journey_hint") Journey hint:
+        select(name="journey_hint")
+          option(value="none", selected="true") None
+          option(value="submission_confirmation") Non-repudiation
+          option(value="registration") Registration
+          option(value="sign_in") Sign-in
+
       p
         label(for="rp-name") Overridden RP Name
         input#rp-name(type="textbox", name="rp-name")

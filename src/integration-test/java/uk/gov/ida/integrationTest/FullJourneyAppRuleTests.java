@@ -83,6 +83,36 @@ public class FullJourneyAppRuleTests extends JerseyGuiceIntegrationTestAdapter {
     }
 
     @Test
+    public void ensureRegistrationHintWorks() throws MarshallingException, SignatureException {
+
+        URI uri = testRp.uriBuilder(Urls.TestRpUrls.SUCCESSFUL_REGISTER_RESOURCE)
+                .queryParam(JOURNEY_HINT_PARAM, JourneyHint.registration)
+                .build();
+        
+        RequestParamHelper.RequestParams requestParams = journeyHelper.startNewJourneyFromTestRp(uri);
+        String hashedPid = journeyHelper.doASuccessfulMatchInLocalMatchingService(testRp.uri(Urls.TestRpUrls.LOCAL_MATCHING_SERVICE_RESOURCE), requestParams.getRequestId().get());
+        Response responseFromHub = journeyHelper.postSuccessAuthnResponseBackFromHub(testRp.uri(Urls.TestRpUrls.LOGIN_RESOURCE), hashedPid, requestParams.getRelayState().get());
+
+        Response testRpSuccessPage = journeyHelper.getSuccessPage(responseFromHub.getHeaderString("Location"), responseFromHub.getCookies().get(TEST_RP_SESSION_COOKIE_NAME));
+        assertThat(testRpSuccessPage.readEntity(String.class)).contains("LEVEL_2");
+    }
+
+    @Test
+    public void ensureSignInHintWorks() throws MarshallingException, SignatureException {
+
+        URI uri = testRp.uriBuilder(Urls.TestRpUrls.SUCCESSFUL_REGISTER_RESOURCE)
+                .queryParam(JOURNEY_HINT_PARAM, JourneyHint.sign_in)
+                .build();
+
+        RequestParamHelper.RequestParams requestParams = journeyHelper.startNewJourneyFromTestRp(uri);
+        String hashedPid = journeyHelper.doASuccessfulMatchInLocalMatchingService(testRp.uri(Urls.TestRpUrls.LOCAL_MATCHING_SERVICE_RESOURCE), requestParams.getRequestId().get());
+        Response responseFromHub = journeyHelper.postSuccessAuthnResponseBackFromHub(testRp.uri(Urls.TestRpUrls.LOGIN_RESOURCE), hashedPid, requestParams.getRelayState().get());
+
+        Response testRpSuccessPage = journeyHelper.getSuccessPage(responseFromHub.getHeaderString("Location"), responseFromHub.getCookies().get(TEST_RP_SESSION_COOKIE_NAME));
+        assertThat(testRpSuccessPage.readEntity(String.class)).contains("LEVEL_2");
+    }
+
+    @Test
     public void ensureNewJourneysWorkFromStartPageWhenLoggedIn() throws MarshallingException, SignatureException {
 
         final RequestParamHelper.RequestParams requestParams = journeyHelper.startNewJourneyFromTestRp(testRp.uri(Urls.TestRpUrls.SUCCESSFUL_REGISTER_RESOURCE));
