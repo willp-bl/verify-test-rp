@@ -132,7 +132,7 @@ public class SessionFactory extends AbstractContainerRequestValueFactory<Session
                 Optional<String> sessionId = Optional.ofNullable(cookieNameValueMap.get(TEST_RP_SESSION_COOKIE_NAME).getValue());
                 if (sessionId.isPresent()) {
                     Optional<Session> result = authenticator.authenticate(new SessionId(sessionId.get()));
-                    if (result.isPresent() && !(journeyHint.isPresent() && journeyHint.get().equals(JourneyHint.submission_confirmation))) {
+                    if (result.isPresent() && !(journeyHint.isPresent() && EnumUtils.isValidEnum(JourneyHint.class, journeyHint.get().name()))) {
                         return result.get();
                     }
                 }
