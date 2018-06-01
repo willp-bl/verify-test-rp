@@ -35,7 +35,11 @@ block content
         input#forceauthn-noc3-rp(type="checkbox", name="forceauthn-noc3-rp", onclick='setNoc3()')
         | Use ForceAuthn and no-cycle3 test RP?
 
-      p 
+      p
+        input#non-eidas-rp(type="checkbox", name="non-eidas-rp", onclick='setNonEidas()')
+        | Use non eidas test RP?
+
+      p
         label(for="journey_hint") Journey hint:
         select(name="journey_hint")
           option(value="none", selected="true") None
@@ -54,15 +58,17 @@ block content
           button.button.get-started-with-eidas(type="submit", value="true", name="eidas") Start with your European eID
   script.
     function setLoa() {
-      if (document.getElementById("loa1-rp").checked) {
-        document.getElementById("rp-name").value = 'loa1-test-rp'
-      } else {
-        document.getElementById("rp-name").value = ''
-      }
+      setRpName('loa1-rp', 'loa1-test-rp')
     }
     function setNoc3() {
-      if (document.getElementById("forceauthn-noc3-rp").checked) {
-        document.getElementById("rp-name").value = 'test-rp-noc3'
+      setRpName('forceauthn-noc3-rp', 'test-rp-noc3')
+    }
+    function setNonEidas() {
+      setRpName('non-eidas-rp', 'non-eidas-test-rp')
+    }
+    function setRpName(elementId, rpName) {
+      if (document.getElementById(elementId).checked) {
+        document.getElementById("rp-name").value = rpName
       } else {
         document.getElementById("rp-name").value = ''
       }
