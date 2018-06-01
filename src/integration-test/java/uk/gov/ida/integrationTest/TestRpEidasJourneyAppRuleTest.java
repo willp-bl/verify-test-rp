@@ -22,7 +22,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class TestRpEidasJourneyAppRuleTest extends JerseyGuiceIntegrationTestAdapter {
@@ -45,20 +44,7 @@ public class TestRpEidasJourneyAppRuleTest extends JerseyGuiceIntegrationTestAda
     }
 
     @Test
-    public void getLandingPage_shouldHaveEidasStartButton() throws Exception {
-        URI uri = testRp.uri(Urls.TestRpUrls.TEST_RP_ROOT);
-        Response response = client.target(uri)
-            .request(MediaType.TEXT_HTML)
-            .get(Response.class);
-
-        assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
-        String html = response.readEntity(String.class);
-        assertTrue(html.contains("Register for an identity profile"));
-        assertTrue(html.contains("Start with your European eID</button>"));
-    }
-
-    @Test
-    public void getTestRpSamlRedirectView_shouldHaveEidasJourneyHint() throws Exception {
+    public void getTestRpSamlRedirectView_shouldHaveEidasJourneyHint() {
         URI uri = testRp.uriBuilder(Urls.TestRpUrls.SUCCESSFUL_REGISTER_RESOURCE)
             .queryParam("eidas", "true")
             .build();
@@ -72,7 +58,7 @@ public class TestRpEidasJourneyAppRuleTest extends JerseyGuiceIntegrationTestAda
     }
 
     @Test
-    public void getHeadlessRpSamlRedirectView_shouldHaveEidasJourneyHint() throws Exception {
+    public void getHeadlessRpSamlRedirectView_shouldHaveEidasJourneyHint() {
         URI uri = testRp.uriBuilder(Urls.HeadlessUrls.SUCCESS_PATH)
             .queryParam("eidas", "true")
             .build();

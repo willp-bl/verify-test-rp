@@ -53,9 +53,6 @@ block content
       p
         input.button.get-started(type="submit", value="Start")
 
-      if shouldShowStartWithEidasButton
-        p
-          button.button.get-started-with-eidas(type="submit", value="true", name="eidas") Start with your European eID
   script.
     function setLoa() {
       setRpName('loa1-rp', 'loa1-test-rp')
@@ -64,7 +61,7 @@ block content
       setRpName('forceauthn-noc3-rp', 'test-rp-noc3')
     }
     function setNonEidas() {
-      setRpName('non-eidas-rp', 'non-eidas-test-rp')
+      setRpName('non-eidas-rp', 'test-rp-non-eidas')
     }
     function setRpName(elementId, rpName) {
       if (document.getElementById(elementId).checked) {
