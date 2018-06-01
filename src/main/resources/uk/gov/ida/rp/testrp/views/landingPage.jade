@@ -28,15 +28,15 @@ block content
         | Should fail account creation?
 
       p
-        input#loa1-rp(type="checkbox", name="loa1-rp", onclick='setLoa()')
+        input#loa1-rp(type="radio", name="rp-name-radio", value="loa1-test-rp", onclick='setRpName(this)')
         | Use LoA1 test RP?
 
       p
-        input#forceauthn-noc3-rp(type="checkbox", name="forceauthn-noc3-rp", onclick='setNoc3()')
+        input#forceauthn-noc3-rp(type="radio", name="rp-name-radio", value="test-rp-noc3", onclick='setRpName(this)')
         | Use ForceAuthn and no-cycle3 test RP?
 
       p
-        input#non-eidas-rp(type="checkbox", name="non-eidas-rp", onclick='setNonEidas()')
+        input#non-eidas-rp(type="radio", name="rp-name-radio", value="test-rp-non-eidas", onclick='setRpName(this)')
         | Use non eidas test RP?
 
       p
@@ -54,18 +54,9 @@ block content
         input.button.get-started(type="submit", value="Start")
 
   script.
-    function setLoa() {
-      setRpName('loa1-rp', 'loa1-test-rp')
-    }
-    function setNoc3() {
-      setRpName('forceauthn-noc3-rp', 'test-rp-noc3')
-    }
-    function setNonEidas() {
-      setRpName('non-eidas-rp', 'test-rp-non-eidas')
-    }
-    function setRpName(elementId, rpName) {
-      if (document.getElementById(elementId).checked) {
-        document.getElementById("rp-name").value = rpName
+    function setRpName(element) {
+      if (element.checked) {
+        document.getElementById("rp-name").value = element.value
       } else {
         document.getElementById("rp-name").value = ''
       }
