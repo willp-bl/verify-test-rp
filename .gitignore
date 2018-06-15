@@ -3,6 +3,7 @@ build
 !docker/build
 .DS_Store
 .gradle
+gradlew.bat
 .idea
 *.iml
 *.ipr
