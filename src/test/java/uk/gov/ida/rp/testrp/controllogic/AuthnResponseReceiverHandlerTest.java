@@ -65,7 +65,6 @@ public class AuthnResponseReceiverHandlerTest {
             Optional.empty(),
             false,
             false,
-            false,
             false);
 
     @Mock

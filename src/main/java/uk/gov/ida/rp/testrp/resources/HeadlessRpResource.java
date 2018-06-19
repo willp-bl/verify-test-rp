@@ -4,6 +4,7 @@ import org.glassfish.jersey.server.ContainerRequest;
 import uk.gov.ida.rp.testrp.Urls;
 import uk.gov.ida.rp.testrp.controllogic.AuthnRequestSenderHandler;
 import uk.gov.ida.rp.testrp.controllogic.AuthnResponseReceiverHandler;
+import uk.gov.ida.rp.testrp.domain.JourneyHint;
 import uk.gov.ida.saml.core.domain.TransactionIdaStatus;
 import uk.gov.ida.saml.idp.stub.domain.InboundResponseFromHub;
 
@@ -49,9 +50,8 @@ public class HeadlessRpResource {
                 Optional.ofNullable(WORKING_ASSERTION_CONSUMER_SERVICE_INDEX),
                 "headless",
                 Optional.empty(),
-                Optional.empty(),
+                eidas.map(x -> JourneyHint.eidas_sign_in),
                 false,
-                eidas.isPresent(),
                 false,
                 false);
     }

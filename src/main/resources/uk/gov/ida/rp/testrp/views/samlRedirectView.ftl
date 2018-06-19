@@ -47,9 +47,6 @@
     <#if showJourneyHint>
         <input type="hidden" value="${journeyHint}" name="journey_hint"/>
     </#if>
-    <#if isEidas>
-        <input type="hidden" value="true" name="eidas_journey"/>
-    </#if>
     <button class='verify-button' id="continue-button">Continue</button>
 </form>
 </body>

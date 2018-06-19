@@ -88,7 +88,6 @@ public class TestRpResourceTest {
                 Optional.empty(),
                 false,
                 false,
-                false,
                 false);
 
         TestRpSuccessPageView successPageView = resource.getSuccessfulRegister(session, Optional.empty(), Optional.of("unit-test-rp"), Optional.of(LevelOfAssuranceDto.LEVEL_1));

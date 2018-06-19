@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.net.URI;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 import static uk.gov.ida.rp.testrp.contract.UnknownUserCreationResponseDto.FAILURE_RESPONSE;
@@ -34,9 +33,9 @@ public class SessionRepository {
         return Optional.ofNullable(sessions.asMap().get(sessionId));
     }
 
-    public SessionId newSession(String requestId, URI requestUri, String issuerId, Optional<Integer> assertionConsumerServiceIndex, Optional<JourneyHint> journeyHint, boolean forceAuthentication, boolean forceLMSNoMatch, boolean forceLMSUserAccountCreationFail, boolean isEidas) {
+    public SessionId newSession(String requestId, URI requestUri, String issuerId, Optional<Integer> assertionConsumerServiceIndex, Optional<JourneyHint> journeyHint, boolean forceAuthentication, boolean forceLMSNoMatch, boolean forceLMSUserAccountCreationFail) {
         SessionId sessionId = SessionId.createNewSessionId();
-        Session session = new Session(sessionId, requestId, requestUri, issuerId, assertionConsumerServiceIndex, journeyHint, forceAuthentication, forceLMSNoMatch, forceLMSUserAccountCreationFail, isEidas);
+        Session session = new Session(sessionId, requestId, requestUri, issuerId, assertionConsumerServiceIndex, journeyHint, forceAuthentication, forceLMSNoMatch, forceLMSUserAccountCreationFail);
         updateSession(sessionId, session);
         return sessionId;
     }

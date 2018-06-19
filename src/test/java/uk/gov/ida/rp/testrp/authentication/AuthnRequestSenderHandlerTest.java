@@ -80,16 +80,16 @@ public class AuthnRequestSenderHandlerTest {
     public void sendAuthnRequest_shouldUseDefaultTargetUriWhenTargetUriNotSpecified() throws Exception {
         final SessionId relayState = SessionId.createNewSessionId();
 
-        when(sessionRepository.newSession(any(), eq(requestUri), any(), any(), any(), eq(forceAuthentication), eq(false), eq(false), eq(false))).thenReturn(relayState);
+        when(sessionRepository.newSession(any(), eq(requestUri), any(), any(), any(), eq(forceAuthentication), eq(false), eq(false))).thenReturn(relayState);
         when(configuration.getSamlConfiguration()).thenReturn(samlConfiguration);
         when(samlConfiguration.getEntityId()).thenReturn("entity id");
 
         this.manager.sendAuthnRequest(requestUri, Optional.empty(), "test-rp",
-            Optional.empty(), Optional.empty(), false,
+            Optional.empty(), Optional.empty(),
             false, false, false);
 
         verify(samlRequestFactory).sendSamlMessage(
-            eq(null), eq(relayState), eq(new URI(hubSsoEndpoint)), eq(Optional.empty()), eq(false));
+            eq(null), eq(relayState), eq(new URI(hubSsoEndpoint)), eq(Optional.empty()));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class AuthnRequestSenderHandlerTest {
         ArgumentCaptor<AuthnRequestFromTransaction> captor = ArgumentCaptor.forClass(AuthnRequestFromTransaction.class);
         when(configuration.getSamlConfiguration()).thenReturn(new TestSamlConfiguration(issuerId));
 
-        this.manager.sendAuthnRequest(requestUri, Optional.empty(), rpName, Optional.empty(), Optional.empty(), forceAuthentication, false, false, false);
+        this.manager.sendAuthnRequest(requestUri, Optional.empty(), rpName, Optional.empty(), Optional.empty(), forceAuthentication, false, false);
 
         verify(authnRequestToStringTransformer).apply(captor.capture());
         assertThat(captor.getValue().getForceAuthentication().get()).isEqualTo(forceAuthentication);
@@ -112,7 +112,7 @@ public class AuthnRequestSenderHandlerTest {
         ArgumentCaptor<AuthnRequestFromTransaction> captor = ArgumentCaptor.forClass(AuthnRequestFromTransaction.class);
         when(configuration.getSamlConfiguration()).thenReturn(new TestSamlConfiguration(issuerId));
         boolean forceAuthn = true;
-        this.manager.sendAuthnRequest(requestUri, Optional.empty(), rpName, Optional.empty(), Optional.empty(), forceAuthn, false, false, false);
+        this.manager.sendAuthnRequest(requestUri, Optional.empty(), rpName, Optional.empty(), Optional.empty(), forceAuthn, false, false);
 
         verify(authnRequestToStringTransformer).apply(captor.capture());
         assertThat(captor.getValue().getForceAuthentication().get()).isEqualTo(forceAuthn);

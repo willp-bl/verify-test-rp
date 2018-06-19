@@ -54,7 +54,7 @@ public class TestRpEidasJourneyAppRuleTest extends JerseyGuiceIntegrationTestAda
             .get(Response.class);
 
         String html = response.readEntity(String.class);
-        assertTrue(html.contains("name=\"eidas_journey\""));
+        assertTrue(html.contains("value=\"eidas_sign_in\""));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class TestRpEidasJourneyAppRuleTest extends JerseyGuiceIntegrationTestAda
             .get(Response.class);
 
         String html = response.readEntity(String.class);
-        assertTrue(html.contains("name=\"eidas_journey\""));
+        assertTrue(html.contains("value=\"eidas_sign_in\""));
     }
 
 }

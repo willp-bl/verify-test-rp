@@ -32,6 +32,9 @@ apply plugin: 'idaJar'
 apply plugin: 'idea'
 apply plugin: 'application'
 
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
 repositories {
     maven { url 'https://artifactory.ida.digital.cabinet-office.gov.uk/artifactory/whitelisted-repos/' }
 }

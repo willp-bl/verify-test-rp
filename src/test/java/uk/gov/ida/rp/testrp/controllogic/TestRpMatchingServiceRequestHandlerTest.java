@@ -215,7 +215,6 @@ public class TestRpMatchingServiceRequestHandlerTest {
                 Optional.empty(),
                 false,
                 forceNoMatch,
-                forceUserAccountCreationFail,
-                false);
+                forceUserAccountCreationFail);
     }
 }
