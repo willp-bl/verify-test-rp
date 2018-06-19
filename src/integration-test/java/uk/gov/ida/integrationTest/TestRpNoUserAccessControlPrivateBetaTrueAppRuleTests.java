@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
-import uk.gov.ida.integrationTest.support.JerseyGuiceIntegrationTestAdapter;
+import uk.gov.ida.integrationTest.support.IntegrationTestHelper;
 import uk.gov.ida.integrationTest.support.TestRpAppRule;
 import uk.gov.ida.integrationTest.support.TokenServiceStubRule;
 import uk.gov.ida.jerseyclient.JerseyClientConfigurationBuilder;
@@ -23,7 +23,7 @@ import java.net.URI;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TestRpNoUserAccessControlPrivateBetaTrueAppRuleTests extends JerseyGuiceIntegrationTestAdapter {
+public class TestRpNoUserAccessControlPrivateBetaTrueAppRuleTests extends IntegrationTestHelper {
 
     private static Client client;
 

@@ -1,14 +1,12 @@
 package uk.gov.ida.rp.testrp.metadata;
 
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.google.common.base.Throwables;
 import com.squarespace.jersey2.guice.JerseyGuiceUtils;
-import io.dropwizard.testing.ResourceHelpers;
-import org.apache.commons.io.FileUtils;
 import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
+import org.apache.commons.io.FileUtils;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -36,8 +34,12 @@ public class MetadataResolverProviderTest {
         JerseyGuiceUtils.reset();
     }
 
-    @ClassRule
-    public static WireMockRule msaStubRule = MsaStubRule.create("metadata.xml");
+    public static MsaStubRule msaStubRule = new MsaStubRule("metadata.xml");
+
+    @AfterClass
+    public static void tearDown() {
+        msaStubRule.stop();
+    }
 
     @Mock
     TestRpConfiguration configuration;
@@ -46,7 +48,7 @@ public class MetadataResolverProviderTest {
 
     @Test
     public void shouldPerformHttpsRequestWhenInsecureMetadataFlagIsNotPresent() throws Exception {
-        when(configuration.getMsaMetadataUri()).thenReturn(URI.create("https://localhost:6663/metadata"));
+        when(configuration.getMsaMetadataUri()).thenReturn(URI.create("https://localhost:"+msaStubRule.getSecurePort()+"/metadata"));
 
         MetadataResolverProvider provider = new MetadataResolverProvider(client, configuration);
 
@@ -55,7 +57,7 @@ public class MetadataResolverProviderTest {
 
     @Test
     public void shouldPerformHttpsRequestWhenInsecureMetadataFlagIsTrue() throws Exception {
-        when(configuration.getMsaMetadataUri()).thenReturn(URI.create("https://localhost:6663/metadata"));
+        when(configuration.getMsaMetadataUri()).thenReturn(URI.create("https://localhost:"+msaStubRule.getSecurePort()+"/metadata"));
         when(configuration.getAllowInsecureMetadataLocation()).thenReturn(true);
 
         MetadataResolverProvider provider = new MetadataResolverProvider(client, configuration);
@@ -64,8 +66,8 @@ public class MetadataResolverProviderTest {
     }
 
     @Test(expected = InsecureMetadataException.class)
-    public void shouldThrowExceptionWhenPerformingHttpRequestWhenInsecureMetadataFlagIsFalse() throws Exception {
-        when(configuration.getMsaMetadataUri()).thenReturn(URI.create("http://localhost:5555/metadata"));
+    public void shouldThrowExceptionWhenPerformingHttpRequestWhenInsecureMetadataFlagIsFalse() {
+        when(configuration.getMsaMetadataUri()).thenReturn(URI.create("http://localhost:"+msaStubRule.getPort()+"/metadata"));
         when(configuration.getAllowInsecureMetadataLocation()).thenReturn(false);
 
         MetadataResolverProvider provider = new MetadataResolverProvider(client, configuration);
@@ -75,7 +77,7 @@ public class MetadataResolverProviderTest {
 
     @Test
     public void shouldPerformHttpRequestWhenInsecureMetadataFlagIsTrue() throws Exception {
-        when(configuration.getMsaMetadataUri()).thenReturn(URI.create("http://localhost:5555/metadata"));
+        when(configuration.getMsaMetadataUri()).thenReturn(URI.create("http://localhost:"+msaStubRule.getPort()+"/metadata"));
         when(configuration.getAllowInsecureMetadataLocation()).thenReturn(true);
 
         MetadataResolverProvider provider = new MetadataResolverProvider(client, configuration);

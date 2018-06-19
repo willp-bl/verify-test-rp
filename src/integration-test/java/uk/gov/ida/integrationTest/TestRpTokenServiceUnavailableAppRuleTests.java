@@ -8,7 +8,7 @@ import io.dropwizard.util.Duration;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
-import uk.gov.ida.integrationTest.support.JerseyGuiceIntegrationTestAdapter;
+import uk.gov.ida.integrationTest.support.IntegrationTestHelper;
 import uk.gov.ida.integrationTest.support.TestRpAppRule;
 import uk.gov.ida.integrationTest.support.TokenServiceStubRule;
 import uk.gov.ida.jerseyclient.JerseyClientConfigurationBuilder;
@@ -20,7 +20,7 @@ import javax.ws.rs.core.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TestRpTokenServiceUnavailableAppRuleTests extends JerseyGuiceIntegrationTestAdapter {
+public class TestRpTokenServiceUnavailableAppRuleTests extends IntegrationTestHelper {
 
     private static Client client;
 

@@ -15,20 +15,10 @@ buildscript {
     }
 }
 
-
-plugins {
-      id "org.sonarqube" version "2.6.2"
-}
-
 apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'idaSonar'
 
 group = "uk.gov.ida"
 version = "0.1.$version"
-
-idaSonar {
-    name = 'ida-sample-rp-sonar'
-}
 
 apply from: 'idea.gradle'
 apply plugin: 'idea'
@@ -42,7 +32,8 @@ apply plugin: 'application'
 repositories {
     if (System.getenv('VERIFY_USE_PUBLIC_BINARIES') == 'true') {
         logger.warn('Production builds MUST NOT be built with public binaries.\nUse artifactory/whitelisted-repos for production builds.\n\n')
-        maven { url 'https://dl.bintray.com/alphagov/maven-test' }
+        maven { url 'https://dl.bintray.com/alphagov/maven' } // For dropwizard-logstash
+        maven { url 'https://dl.bintray.com/alphagov/maven-test' } // For other public verify binaries
         jcenter()
     }
     else {
@@ -190,6 +181,8 @@ task intTest(type: Test) {
     testClassesDir = sourceSets.integrationTest.output.classesDir
     classpath += sourceSets.integrationTest.runtimeClasspath
 }
+
+tasks.check.dependsOn(intTest)
 
 ext.mainclass = 'uk.gov.ida.rp.testrp.TestRpApplication'
 mainClassName = ext.mainclass
