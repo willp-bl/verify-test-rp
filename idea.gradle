@@ -5,7 +5,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'uk.gov.ida:ida-gradle:1.1.0-10'
+        classpath 'uk.gov.ida:ida-gradle:1.1.0-23'
     }
 }
 
