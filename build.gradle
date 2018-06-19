@@ -50,11 +50,11 @@ def dependencyVersions = [
         dropwizard:'1.2.0',
         dropwizard_jade:10514,
         ida_test_utils: '2.0.0-43',
-        ida_dev_pki: '1.1.0-20',//problem (latest 43)
+        ida_dev_pki: '1.1.0-43',
         opensaml_version: "$opensaml",
-        saml_libs_version: "$opensaml-128",//problem (latest 147)
-        hub_saml: '3.3.0-123',//problem (latest 15582)
-        stub_idp_saml: '3.3.0-68'//problem (latest 72)
+        saml_libs_version: "$opensaml-147",
+        hub_saml: '3.3.0-15582',
+        stub_idp_saml: '3.3.0-72'
 ]
 
 configurations {

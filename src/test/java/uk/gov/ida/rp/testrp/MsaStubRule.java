@@ -4,6 +4,7 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import io.dropwizard.testing.ResourceHelpers;
 import org.apache.commons.io.FileUtils;
+import uk.gov.ida.saml.core.test.TestCertificateStrings;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,16 +32,24 @@ public class MsaStubRule {
                 .keystorePath("test_keys/dev_service_ssl.ks")
                 .keystorePassword("marshmallow"));
 
-        String metadataContent;
+        server.stubFor(WireMock.get(urlEqualTo("/metadata"))
+                .willReturn(aResponse()
+                        .withBody(getMetadata(metadataFilename))));
+        start();
+    }
+
+    private String getMetadata(String metadataFilename) {
         try {
-            metadataContent = FileUtils.readFileToString(new File(ResourceHelpers.resourceFilePath(metadataFilename)));
+            String metadataContent = FileUtils.readFileToString(new File(ResourceHelpers.resourceFilePath(metadataFilename)));
+            metadataContent = metadataContent.replaceAll("%MSA_SIGNING%", TestCertificateStrings.TEST_RP_MS_PUBLIC_SIGNING_CERT);
+            metadataContent = metadataContent.replaceAll("%MSA_ENCRYPTION%", TestCertificateStrings.TEST_RP_MS_PUBLIC_ENCRYPTION_CERT);
+            metadataContent = metadataContent.replaceAll("%HUB_SIGNING_ONE%", TestCertificateStrings.HUB_TEST_PUBLIC_SIGNING_CERT);
+            metadataContent = metadataContent.replaceAll("%HUB_SIGNING_TWO%", TestCertificateStrings.HUB_TEST_SECONDARY_PUBLIC_SIGNING_CERT);
+            metadataContent = metadataContent.replaceAll("%HUB_ENCRYPTION%", TestCertificateStrings.HUB_TEST_PUBLIC_ENCRYPTION_CERT);
+            return metadataContent;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        server.stubFor(WireMock.get(urlEqualTo("/metadata"))
-                .willReturn(aResponse()
-                        .withBody(metadataContent)));
-        start();
     }
 
     public int getPort() {
