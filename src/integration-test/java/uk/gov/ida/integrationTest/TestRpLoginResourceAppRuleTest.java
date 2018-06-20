@@ -1,6 +1,5 @@
 package uk.gov.ida.integrationTest;
 
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.client.JerseyClientConfiguration;
 import io.dropwizard.testing.ConfigOverride;
@@ -9,15 +8,12 @@ import org.glassfish.jersey.client.ClientProperties;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.rules.TestRule;
 import org.opensaml.saml.saml2.core.StatusCode;
-import uk.gov.ida.integrationTest.support.JerseyGuiceIntegrationTestAdapter;
+import uk.gov.ida.integrationTest.support.IntegrationTestHelper;
 import uk.gov.ida.integrationTest.support.JourneyHelper;
 import uk.gov.ida.integrationTest.support.RequestParamHelper;
 import uk.gov.ida.integrationTest.support.TestRpAppRule;
 import uk.gov.ida.jerseyclient.JerseyClientConfigurationBuilder;
-import uk.gov.ida.rp.testrp.MsaStubRule;
 import uk.gov.ida.rp.testrp.Urls;
 
 import javax.ws.rs.client.Client;
@@ -34,28 +30,22 @@ import static uk.gov.ida.integrationTest.support.HubResponseFactory.getUnsignedN
 import static uk.gov.ida.integrationTest.support.HubResponseFactory.getUnsignedResponse;
 import static uk.gov.ida.rp.testrp.Urls.Cookies.TEST_RP_SESSION_COOKIE_NAME;
 
-public class TestRpLoginResourceAppRuleTest extends JerseyGuiceIntegrationTestAdapter {
+public class TestRpLoginResourceAppRuleTest extends IntegrationTestHelper {
     private static final String LOGIN_PATH = Urls.TestRpUrls.LOGIN_RESOURCE;
     private static Client client;
     private static JourneyHelper journeyHelper;
 
-    private static WireMockRule msaStubRule = MsaStubRule.create("metadata.xml");
-
-    private static TestRpAppRule wantsHubSignatureTestRp = TestRpAppRule.newTestRpAppRule(
+    @ClassRule
+    public static TestRpAppRule wantsHubSignatureTestRp = TestRpAppRule.newTestRpAppRule(
             ConfigOverride.config("clientTrustStoreConfiguration.path", ResourceHelpers.resourceFilePath("ida_truststore.ts")),
-            ConfigOverride.config("msaMetadataUri", "https://localhost:6663/metadata"),
+            ConfigOverride.config("msaMetadataUri", "https://localhost:"+getMsaStubRule().getSecurePort()+"/metadata"),
             ConfigOverride.config("hubExpectedToSignAuthnResponse", "true"));
 
-    private static TestRpAppRule wantsNoHubSignatureTestRp = TestRpAppRule.newTestRpAppRule(
+    @ClassRule
+    public static TestRpAppRule wantsNoHubSignatureTestRp = TestRpAppRule.newTestRpAppRule(
             ConfigOverride.config("clientTrustStoreConfiguration.path", ResourceHelpers.resourceFilePath("ida_truststore.ts")),
-            ConfigOverride.config("msaMetadataUri", "https://localhost:6663/metadata"),
+            ConfigOverride.config("msaMetadataUri", "https://localhost:"+getMsaStubRule().getSecurePort()+"/metadata"),
             ConfigOverride.config("hubExpectedToSignAuthnResponse", "false"));
-
-    @ClassRule
-    public static TestRule chain1 = RuleChain.outerRule(msaStubRule).around(wantsHubSignatureTestRp);
-
-    @ClassRule
-    public static TestRule chain2 = RuleChain.outerRule(msaStubRule).around(wantsNoHubSignatureTestRp);
 
     @BeforeClass
     public static void beforeClass() {

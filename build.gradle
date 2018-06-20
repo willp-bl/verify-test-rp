@@ -1,27 +1,24 @@
 buildscript {
     repositories {
-        maven { url 'https://artifactory.ida.digital.cabinet-office.gov.uk/artifactory/whitelisted-repos/' }
+        if (System.getenv('VERIFY_USE_PUBLIC_BINARIES') == 'true') {
+            logger.warn('Production builds MUST NOT be built with public binaries.\nUse artifactory/whitelisted-repos for production builds.\n\n')
+            maven { url 'https://dl.bintray.com/alphagov/maven-test' }
+            jcenter()
+        }
+        else {
+            maven { url 'https://artifactory.ida.digital.cabinet-office.gov.uk/artifactory/whitelisted-repos' }
+        }
     }
     dependencies {
-        classpath 'uk.gov.ida:ida-gradle:1.1.0-20',
+        classpath 'uk.gov.ida:ida-gradle:1.1.0-23',
                   'com.github.ben-manes:gradle-versions-plugin:0.15.0'
     }
 }
 
-
-plugins {
-      id "org.sonarqube" version "2.6.2"
-}
-
 apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'idaSonar'
 
 group = "uk.gov.ida"
 version = "0.1.$version"
-
-idaSonar {
-    name = 'ida-sample-rp-sonar'
-}
 
 apply from: 'idea.gradle'
 apply plugin: 'idea'
@@ -33,7 +30,15 @@ apply plugin: 'idea'
 apply plugin: 'application'
 
 repositories {
-    maven { url 'https://artifactory.ida.digital.cabinet-office.gov.uk/artifactory/whitelisted-repos/' }
+    if (System.getenv('VERIFY_USE_PUBLIC_BINARIES') == 'true') {
+        logger.warn('Production builds MUST NOT be built with public binaries.\nUse artifactory/whitelisted-repos for production builds.\n\n')
+        maven { url 'https://dl.bintray.com/alphagov/maven' } // For dropwizard-logstash
+        maven { url 'https://dl.bintray.com/alphagov/maven-test' } // For other public verify binaries
+        jcenter()
+    }
+    else {
+        maven { url 'https://artifactory.ida.digital.cabinet-office.gov.uk/artifactory/whitelisted-repos' }
+    }
 }
 
 ext {
@@ -41,15 +46,15 @@ ext {
 }
 
 def dependencyVersions = [
-        ida_utils:317,
+        ida_utils:336,
         dropwizard:'1.2.0',
-        dropwizard_jade:10511,
-        ida_test_utils: '2.0.0-38',
-        ida_dev_pki: '1.1.0-20',
+        dropwizard_jade:10514,
+        ida_test_utils: '2.0.0-43',
+        ida_dev_pki: '1.1.0-43',
         opensaml_version: "$opensaml",
-        saml_libs_version: "$opensaml-128",
-        hub_saml: '3.3.0-123',
-        stub_idp_saml: '3.3.0-68'
+        saml_libs_version: "$opensaml-147",
+        hub_saml: '3.3.0-15582',
+        stub_idp_saml: '3.3.0-72'
 ]
 
 configurations {
@@ -101,7 +106,7 @@ dependencies {
             "uk.gov.ida:rest-utils:2.0.0-$dependencyVersions.ida_utils",
             "uk.gov.ida:security-utils:2.0.0-$dependencyVersions.ida_utils"
 
-    jade "uk.gov.ida:dropwizard-jade:2.0.0-$dependencyVersions.dropwizard_jade"
+    jade "uk.gov.ida:dropwizard-jade:1.1.4-$dependencyVersions.dropwizard_jade"
 
     ida_test_utils "uk.gov.ida:common-test-utils:$dependencyVersions.ida_test_utils"
 
@@ -176,6 +181,8 @@ task intTest(type: Test) {
     testClassesDir = sourceSets.integrationTest.output.classesDir
     classpath += sourceSets.integrationTest.runtimeClasspath
 }
+
+tasks.check.dependsOn(intTest)
 
 ext.mainclass = 'uk.gov.ida.rp.testrp.TestRpApplication'
 mainClassName = ext.mainclass
