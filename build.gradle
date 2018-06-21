@@ -10,23 +10,17 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'uk.gov.ida:ida-gradle:1.1.0-23',
-                  'com.github.ben-manes:gradle-versions-plugin:0.15.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
     }
 }
 
 apply plugin: 'com.github.ben-manes.versions'
 
 group = "uk.gov.ida"
-version = "0.1.$version"
-
-apply from: 'idea.gradle'
-apply plugin: 'idea'
+version = "${System.env.BUILD_NUMBER ?: 'SNAPSHOT'}"
 
 apply plugin: 'java'
 apply plugin: 'jacoco'
-apply plugin: 'idaJar'
-apply plugin: 'idea'
 apply plugin: 'application'
 
 repositories {
@@ -53,7 +47,7 @@ def dependencyVersions = [
         ida_dev_pki: '1.1.0-43',
         opensaml_version: "$opensaml",
         saml_libs_version: "$opensaml-147",
-        hub_saml: '3.3.0-15582',
+        hub_saml: '3.3.0-15583',
         stub_idp_saml: '3.3.0-72'
 ]
 
@@ -187,8 +181,6 @@ tasks.check.dependsOn(intTest)
 ext.mainclass = 'uk.gov.ida.rp.testrp.TestRpApplication'
 mainClassName = ext.mainclass
 
-jar.baseName = 'ida-sample-rp'
-
 task copyToLib(dependsOn: jar, type: Copy) {
     into "$buildDir/output/lib"
     from configurations.runtime
@@ -218,4 +210,5 @@ jar {
     }
 
     destinationDir = file("$buildDir/output")
+    archiveName = 'ida-sample-rp.jar'
 }
