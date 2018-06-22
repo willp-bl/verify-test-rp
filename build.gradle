@@ -48,7 +48,7 @@ ext {
 def dependencyVersions = [
         ida_utils:336,
         dropwizard:'1.2.0',
-        dropwizard_jade:10514,
+        dropwizard_jade:10516,
         ida_test_utils: '2.0.0-43',
         ida_dev_pki: '1.1.0-43',
         opensaml_version: "$opensaml",
