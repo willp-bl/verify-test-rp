@@ -5,6 +5,5 @@ public enum JourneyHint {
     registration,
     uk_idp_sign_in,
     eidas_sign_in,
-    unspecified,
-    other_value_xyz
+    unspecified
 }
