@@ -96,7 +96,6 @@ public class SessionFactory extends AbstractContainerRequestValueFactory<Session
             }
         }
 
-        // TODO: remove the EIDAS_PARAM completely
         if (containsQueryParam(EIDAS_PARAM) && !journeyHint.isPresent()) {
             journeyHint = Optional.of(JourneyHint.eidas_sign_in);
         }
