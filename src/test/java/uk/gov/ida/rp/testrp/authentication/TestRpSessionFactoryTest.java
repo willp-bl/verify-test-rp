@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.gov.ida.common.SessionId;
 import uk.gov.ida.rp.testrp.TestRpConfiguration;
 import uk.gov.ida.rp.testrp.controllogic.AuthnRequestSenderHandler;
+import uk.gov.ida.rp.testrp.domain.JourneyHint;
 import uk.gov.ida.rp.testrp.repositories.Session;
 import uk.gov.ida.rp.testrp.tokenservice.AccessTokenValidator;
 
@@ -76,7 +77,6 @@ public class TestRpSessionFactoryTest {
             Optional.empty(),
             false,
             false,
-            false,
             false);
 
     @Before
@@ -128,9 +128,8 @@ public class TestRpSessionFactoryTest {
                 any(),
                 anyString(),
                 any(),
-                any(),
+                eq(Optional.of(JourneyHint.eidas_sign_in)),
                 anyBoolean(),
-                eq(true),
                 anyBoolean(),
                 anyBoolean()
         );

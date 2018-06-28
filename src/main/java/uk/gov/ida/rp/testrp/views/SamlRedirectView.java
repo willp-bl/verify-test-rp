@@ -12,19 +12,16 @@ public class SamlRedirectView extends View {
     private String responseBody;
     private SessionId relayState;
     private final Optional<JourneyHint> journeyHint;
-    private final boolean isEidas;
 
     public SamlRedirectView(URI targetUri,
                             String base64EncodedResponseBody,
                             SessionId relayState,
-                            Optional<JourneyHint> journeyHint,
-                            final boolean isEidas) {
+                            Optional<JourneyHint> journeyHint) {
         super("samlRedirectView.ftl");
         this.targetUri = targetUri;
         this.responseBody = base64EncodedResponseBody;
         this.relayState = relayState;
         this.journeyHint = journeyHint;
-        this.isEidas = isEidas;
     }
 
     public URI getTargetUri() {
@@ -45,9 +42,5 @@ public class SamlRedirectView extends View {
 
     public String getJourneyHint() {
         return journeyHint.isPresent()?journeyHint.get().name():"";
-    }
-
-    public boolean getIsEidas() {
-        return isEidas;
     }
 }

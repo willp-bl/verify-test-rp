@@ -20,11 +20,10 @@ public class Session implements Principal {
     private final boolean forceAuthentication;
     private final boolean forceLMSUserAccountCreationFail;
     private final boolean forceLMSNoMatch;
-    private final boolean isEidas;
     private final URI pathUserWasTryingToAccess;
     private Optional<String> matchedHashedPidForSession;
 
-    public Session(SessionId sessionId, String requestId, URI pathUserWasTryingToAccess, String issuerId, Optional<Integer> assertionConsumerServiceIndex, Optional<JourneyHint> journeyHint, boolean forceAuthentication, boolean forceLMSNoMatch, boolean forceLMSUserAccountCreationFail, boolean isEidas) {
+    public Session(SessionId sessionId, String requestId, URI pathUserWasTryingToAccess, String issuerId, Optional<Integer> assertionConsumerServiceIndex, Optional<JourneyHint> journeyHint, boolean forceAuthentication, boolean forceLMSNoMatch, boolean forceLMSUserAccountCreationFail) {
         this.sessionId = sessionId;
         this.requestId = requestId;
         // remove JOURNEY_HINT_PARAM, otherwise Cycle3UserFactory will bounce the user back to hub
@@ -36,12 +35,11 @@ public class Session implements Principal {
         this.forceAuthentication = forceAuthentication;
         this.forceLMSUserAccountCreationFail = forceLMSUserAccountCreationFail;
         this.forceLMSNoMatch = forceLMSNoMatch;
-        this.isEidas = isEidas;
         this.matchedHashedPidForSession = Optional.empty();
     }
 
     public Session(SessionId sessionId, String requestId, URI pathUserWasTryingToAccess, String issuerId, Optional<Integer> assertionConsumerServiceIndex, Optional<JourneyHint> journeyHint) {
-        this(sessionId, requestId, pathUserWasTryingToAccess, issuerId, assertionConsumerServiceIndex, journeyHint, false, false, false, false);
+        this(sessionId, requestId, pathUserWasTryingToAccess, issuerId, assertionConsumerServiceIndex, journeyHint, false, false, false);
     }
 
     public boolean forceLMSUserAccountCreationFail() {

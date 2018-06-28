@@ -96,12 +96,15 @@ public class SessionFactory extends AbstractContainerRequestValueFactory<Session
             }
         }
 
+        if (containsQueryParam(EIDAS_PARAM) && !journeyHint.isPresent()) {
+            journeyHint = Optional.of(JourneyHint.eidas_sign_in);
+        }
+
         return getUser(
             accessToken,
             overriddenRpName,
             journeyHint,
             forceAuthentication,
-            containsQueryParam(EIDAS_PARAM),
             containsQueryParam(NO_MATCH),
             containsQueryParam(FAIL_ACCOUNT_CREATION));
     }
@@ -120,7 +123,6 @@ public class SessionFactory extends AbstractContainerRequestValueFactory<Session
             Optional<String> overriddenRpName,
             Optional<JourneyHint> journeyHint,
             boolean forceAuthentication,
-            boolean isEidas,
             boolean forceLMSNoMatch,
             boolean forceLMSUserAccountCreationFail) {
 
@@ -149,7 +151,6 @@ public class SessionFactory extends AbstractContainerRequestValueFactory<Session
                 accessToken,
                 journeyHint,
                 forceAuthentication,
-                isEidas,
                 forceLMSNoMatch,
                 forceLMSUserAccountCreationFail);
 

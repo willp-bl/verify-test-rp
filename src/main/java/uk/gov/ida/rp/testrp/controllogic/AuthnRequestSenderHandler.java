@@ -55,7 +55,6 @@ public class AuthnRequestSenderHandler {
             Optional<AccessToken> accessToken,
             Optional<JourneyHint> journeyHint,
             boolean forceAuthentication,
-            boolean isEidas,
             boolean forceLMSNoMatch,
             boolean forceLMSUserAccountCreationFail) {
 
@@ -67,9 +66,9 @@ public class AuthnRequestSenderHandler {
             LOG.info("USED_TOKEN:{},{}", accessToken.get(), requestId);
         }
 
-        final SessionId sessionId = sessionRepository.newSession(requestId, requestUri, issuerId, assertionConsumerServiceIndex, journeyHint, forceAuthentication, forceLMSNoMatch, forceLMSUserAccountCreationFail, isEidas);
+        final SessionId sessionId = sessionRepository.newSession(requestId, requestUri, issuerId, assertionConsumerServiceIndex, journeyHint, forceAuthentication, forceLMSNoMatch, forceLMSUserAccountCreationFail);
 
-        return samlRequestFactory.sendSamlMessage(authnRequestToStringTransformer.apply(requestToSendToHub), sessionId, getHubSsoUri(), journeyHint, isEidas);
+        return samlRequestFactory.sendSamlMessage(authnRequestToStringTransformer.apply(requestToSendToHub), sessionId, getHubSsoUri(), journeyHint);
     }
 
     private URI getHubSsoUri() {

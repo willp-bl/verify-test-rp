@@ -94,7 +94,7 @@ public class FullJourneyAppRuleTests extends IntegrationTestHelper {
     public void ensureSignInHintWorks() throws MarshallingException, SignatureException {
 
         URI uri = testRp.uriBuilder(Urls.TestRpUrls.SUCCESSFUL_REGISTER_RESOURCE)
-                .queryParam(JOURNEY_HINT_PARAM, JourneyHint.sign_in)
+                .queryParam(JOURNEY_HINT_PARAM, JourneyHint.uk_idp_sign_in)
                 .build();
 
         RequestParamHelper.RequestParams requestParams = journeyHelper.startNewJourneyFromTestRp(uri);

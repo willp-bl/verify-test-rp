@@ -19,18 +19,17 @@ public class SamlAuthnRequestRedirectViewFactory {
         // intentionally blank
     }
 
-    public Response sendSamlMessage(String messageToSend, SessionId relayState, URI targetUriFromSamlEndpoint, Optional<JourneyHint> journeyHint, boolean isEidas) {
-        return getResponse(messageToSend, relayState, targetUriFromSamlEndpoint, journeyHint, isEidas);
+    public Response sendSamlMessage(String messageToSend, SessionId relayState, URI targetUriFromSamlEndpoint, Optional<JourneyHint> journeyHint) {
+        return getResponse(messageToSend, relayState, targetUriFromSamlEndpoint, journeyHint);
     }
 
     private Response getResponse(
             String samlMessage,
             SessionId relayState,
             URI targetUriFromSamlEndpoint,
-            Optional<JourneyHint> journeyHint,
-            boolean isEidas) {
+            Optional<JourneyHint> journeyHint) {
 
-        SamlRedirectView samlFormPostingView = new SamlRedirectView(targetUriFromSamlEndpoint, samlMessage, relayState, journeyHint, isEidas);
+        SamlRedirectView samlFormPostingView = new SamlRedirectView(targetUriFromSamlEndpoint, samlMessage, relayState, journeyHint);
         return Response.ok(samlFormPostingView)
             .header(HttpHeaders.CACHE_CONTROL, "no-cache, no-store")
             .header(HttpHeaders.PRAGMA, "no-cache")
