@@ -4,7 +4,7 @@ public enum JourneyHint {
     submission_confirmation,
     registration,
     uk_idp_sign_in,
-    verify_start,
+    uk_idp_start,
     eidas_sign_in,
     unspecified
 }
