@@ -5,6 +5,7 @@ public interface Urls {
     String LOGIN_PATH = "/login";
     String SUCCESSFUL_REGISTER_PATH = "/success";
     String LOGOUT_PATH = "/logout";
+    String SUCCESSFUL_IDP_PATH = "/success-idp" ;
 
     interface TestRpUrls {
         String TEST_RP_ROOT = "/test-rp";
