@@ -3,9 +3,7 @@ package uk.gov.ida.rp.testrp.resources;
 import org.glassfish.jersey.server.ContainerRequest;
 import uk.gov.ida.rp.testrp.Urls;
 import uk.gov.ida.rp.testrp.controllogic.AuthnRequestSenderHandler;
-import uk.gov.ida.rp.testrp.controllogic.AuthnResponseReceiverHandler;
 import uk.gov.ida.rp.testrp.domain.JourneyHint;
-import uk.gov.ida.saml.core.domain.TransactionIdaStatus;
 import uk.gov.ida.saml.idp.stub.domain.InboundResponseFromHub;
 
 import javax.inject.Inject;
@@ -16,7 +14,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -43,14 +40,28 @@ public class HeadlessRpResource {
     @GET
     @Path(Urls.SUCCESSFUL_REGISTER_PATH)
     public Response makeAuthnRequest(
-            @Context ContainerRequest containerRequest,
-            @QueryParam("eidas") Optional<String> eidas) {
+            @Context ContainerRequest containerRequest) {
         return authnRequestSenderHandler.sendAuthnRequest(
                 containerRequest.getUriInfo().getRequestUri(),
                 Optional.ofNullable(WORKING_ASSERTION_CONSUMER_SERVICE_INDEX),
                 "headless",
                 Optional.empty(),
-                eidas.map(x -> JourneyHint.eidas_sign_in),
+                Optional.of(JourneyHint.uk_idp_start),
+                false,
+                false,
+                false);
+    }
+
+    @GET
+    @Path(Urls.SUCCESSFUL_IDP_PATH)
+    public Response makeIdpAuthnRequest(
+            @Context ContainerRequest containerRequest) {
+        return authnRequestSenderHandler.sendAuthnRequest(
+                containerRequest.getUriInfo().getRequestUri(),
+                Optional.ofNullable(WORKING_ASSERTION_CONSUMER_SERVICE_INDEX),
+                "headless",
+                Optional.empty(),
+                Optional.of(JourneyHint.uk_idp_start),
                 false,
                 false,
                 false);
