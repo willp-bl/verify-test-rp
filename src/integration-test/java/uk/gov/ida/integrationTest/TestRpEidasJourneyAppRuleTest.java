@@ -50,9 +50,8 @@ public class TestRpEidasJourneyAppRuleTest extends IntegrationTestHelper {
     }
 
     @Test
-    public void getHeadlessRpSamlRedirectView_shouldHaveEidasJourneyHint() {
+    public void getHeadlessRpSamlRedirectView_shouldHaveIdpStartJourneyHint() {
         URI uri = testRp.uriBuilder(Urls.HeadlessUrls.SUCCESS_PATH)
-            .queryParam("eidas", "true")
             .build();
 
         Response response = client.target(uri)
@@ -60,7 +59,6 @@ public class TestRpEidasJourneyAppRuleTest extends IntegrationTestHelper {
             .get(Response.class);
 
         String html = response.readEntity(String.class);
-        assertTrue(html.contains("value=\"eidas_sign_in\""));
+        assertTrue(html.contains("value=\"uk_idp_start\""));
     }
-
 }
