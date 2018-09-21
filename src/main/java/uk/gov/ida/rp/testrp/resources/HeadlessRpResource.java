@@ -46,7 +46,7 @@ public class HeadlessRpResource {
                 Optional.ofNullable(WORKING_ASSERTION_CONSUMER_SERVICE_INDEX),
                 "headless",
                 Optional.empty(),
-                Optional.of(JourneyHint.uk_idp_start),
+                Optional.empty(),
                 false,
                 false,
                 false);

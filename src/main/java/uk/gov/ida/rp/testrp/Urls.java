@@ -24,6 +24,7 @@ public interface Urls {
         String HEADLESS_ROOT = "/headless-rp";
         String LOGIN_PATH = Urls.LOGIN_PATH;
         String SUCCESS_PATH = HEADLESS_ROOT + SUCCESSFUL_REGISTER_PATH;
+        String SUCCESS_PATH_IDP = HEADLESS_ROOT + SUCCESSFUL_IDP_PATH;
     }
 
     interface Cookies {
