@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class TestRpEidasJourneyAppRuleTest extends IntegrationTestHelper {
@@ -50,8 +51,8 @@ public class TestRpEidasJourneyAppRuleTest extends IntegrationTestHelper {
     }
 
     @Test
-    public void getHeadlessRpSamlRedirectView_shouldHaveIdpStartJourneyHint() {
-        URI uri = testRp.uriBuilder(Urls.HeadlessUrls.SUCCESS_PATH)
+    public void getHeadlessRpIdpStartSamlRedirectView_shouldHaveIdpStartJourneyHint() {
+        URI uri = testRp.uriBuilder(Urls.HeadlessUrls.SUCCESS_PATH_IDP)
             .build();
 
         Response response = client.target(uri)
@@ -59,6 +60,26 @@ public class TestRpEidasJourneyAppRuleTest extends IntegrationTestHelper {
             .get(Response.class);
 
         String html = response.readEntity(String.class);
+
         assertTrue(html.contains("value=\"uk_idp_start\""));
+    }
+
+    @Test
+    public void getHeadlessRpStartSamlRedirectView_shouldHaveNoJourneyHint() {
+        URI uri = testRp.uriBuilder(Urls.HeadlessUrls.SUCCESS_PATH)
+                .build();
+
+        Response response = client.target(uri)
+                .request(MediaType.TEXT_HTML)
+                .get(Response.class);
+
+        String html = response.readEntity(String.class);
+
+        assertFalse(html.contains("value=\"submission_confirmation\""));
+        assertFalse(html.contains("value=\"registration\""));
+        assertFalse(html.contains("value=\"uk_idp_sign_in\""));
+        assertFalse(html.contains("value=\"uk_idp_start\""));
+        assertFalse(html.contains("value=\"eidas_sign_in\""));
+        assertFalse(html.contains("value=\"unspecified\""));
     }
 }
