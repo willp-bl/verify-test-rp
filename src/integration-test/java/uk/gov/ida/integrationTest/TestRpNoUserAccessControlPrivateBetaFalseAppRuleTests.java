@@ -60,7 +60,7 @@ public class TestRpNoUserAccessControlPrivateBetaFalseAppRuleTests extends Integ
                 .get(Response.class);
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
-        assertThat(response.readEntity(String.class)).contains("Register for an identity profile");
+        assertThat(response.readEntity(String.class)).contains("Test GOV.UK Verify user journeys");
     }
 
     @Test
@@ -74,7 +74,7 @@ public class TestRpNoUserAccessControlPrivateBetaFalseAppRuleTests extends Integ
                 .get(Response.class);
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
-        assertThat(response.readEntity(String.class)).contains("Register for an identity profile");
+        assertThat(response.readEntity(String.class)).contains("Test GOV.UK Verify user journeys");
     }
 
     @Test
@@ -86,6 +86,6 @@ public class TestRpNoUserAccessControlPrivateBetaFalseAppRuleTests extends Integ
                 .get(Response.class);
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
-        assertThat(response.readEntity(String.class)).contains("Register for an identity profile");
+        assertThat(response.readEntity(String.class)).contains("Test GOV.UK Verify user journeys");
     }
 }
