@@ -47,7 +47,7 @@ public class TestRpEidasJourneyDisabledAppRuleTest extends IntegrationTestHelper
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
         String html = response.readEntity(String.class);
-        assertTrue(html.contains("Register for an identity profile"));
+        assertTrue(html.contains("Test GOV.UK Verify user journeys"));
         assertFalse(html.contains("Start with your European eID</button>"));
     }
 }

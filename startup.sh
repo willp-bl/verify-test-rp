@@ -6,7 +6,7 @@ if test -e local.env; then
     set +a
 else
     printf "$(tput setaf 1)No local environment found. Use verify-local-startup or openssl to generate a local.env file\n$(tput sgr0)"
-    echo "verify-local-startup$ ruby generate-env.rb -f ../ida-sample-rp/local.env"
+    echo "verify-local-startup$ ruby generate-env.rb -f ../verify-test-rp/local.env"
     exit
 fi
 
