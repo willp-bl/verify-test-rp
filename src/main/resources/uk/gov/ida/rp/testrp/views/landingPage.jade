@@ -28,15 +28,15 @@ block content
         | Should fail account creation?
 
       p
-        input#loa1-rp(type="radio", name="rp-name-radio", value="loa1-test-rp", onclick='setRpName(this)')
+        input#loa1-rp(type="radio", name="rp-name-radio", value="loa1-test-rp")
         | Use LoA1 test RP?
 
       p
-        input#forceauthn-noc3-rp(type="radio", name="rp-name-radio", value="test-rp-noc3", onclick='setRpName(this)')
+        input#forceauthn-noc3-rp(type="radio", name="rp-name-radio", value="test-rp-noc3")
         | Use ForceAuthn and no-cycle3 test RP?
 
       p
-        input#non-eidas-rp(type="radio", name="rp-name-radio", value="test-rp-non-eidas", onclick='setRpName(this)')
+        input#non-eidas-rp(type="radio", name="rp-name-radio", value="test-rp-non-eidas")
         | Use non eidas test RP?
 
       p
@@ -53,14 +53,7 @@ block content
       p
         input.button.get-started(type="submit", value="Start")
 
-  script.
-    function setRpName(element) {
-      if (element.checked) {
-        document.getElementById("rp-name").value = element.value
-      } else {
-        document.getElementById("rp-name").value = ''
-      }
-    }
+  script(src='/assets/scripts/set-rp-name.js')
 
 block relatedContent
   h2 More about identity assurance
