@@ -21,7 +21,9 @@ import uk.gov.ida.filters.AcceptLanguageFilter;
 import uk.gov.ida.rp.testrp.authentication.TestRpAuthProvider;
 import uk.gov.ida.rp.testrp.exceptions.InvalidAccessTokenExceptionMapper;
 import uk.gov.ida.rp.testrp.exceptions.TokenServiceUnavailableExceptionMapper;
+import uk.gov.ida.rp.testrp.filters.NoCacheResponseFilter;
 import uk.gov.ida.rp.testrp.filters.SampleRpCacheControlFilter;
+import uk.gov.ida.rp.testrp.filters.SecurityHeadersFilter;
 import uk.gov.ida.rp.testrp.resources.AuthnResponseReceiverResource;
 import uk.gov.ida.rp.testrp.resources.CookiesInfoResource;
 import uk.gov.ida.rp.testrp.resources.HeadlessRpResource;
@@ -115,6 +117,10 @@ public class TestRpApplication extends Application<TestRpConfiguration> {
         //exception mappers
         environment.jersey().register(InvalidAccessTokenExceptionMapper.class);
         environment.jersey().register(TokenServiceUnavailableExceptionMapper.class);
+
+        //filters
+        environment.jersey().register(NoCacheResponseFilter.class);
+        environment.jersey().register(SecurityHeadersFilter.class);
 
         //health checks
         environment.healthChecks().register("metadata", guiceBundle.getInjector().getInstance(MetadataHealthCheck.class));
