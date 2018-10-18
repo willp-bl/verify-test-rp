@@ -1,4 +1,5 @@
-function setRpName(element) {
+function setRpName(event) {
+  element = event.target
   if (element.checked) {
     document.getElementById("rp-name").value = element.value
   } else {
@@ -6,6 +7,6 @@ function setRpName(element) {
   }
 }
 
-document.getElementById('loa1-rp').addEventListener('click', setRpName(this));
-document.getElementById('forceauthn-noc3-rp').addEventListener('click', setRpName(this));
-document.getElementById('non-eidas-rp').addEventListener('click', setRpName(this));
+document.getElementById('loa1-rp').addEventListener('click', setRpName);
+document.getElementById('forceauthn-noc3-rp').addEventListener('click', setRpName);
+document.getElementById('non-eidas-rp').addEventListener('click', setRpName);
