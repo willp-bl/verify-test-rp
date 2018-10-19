@@ -53,7 +53,7 @@ def build_debian_package(build_number, service_path, service_name, package_name,
     system "bundle exec fpm -s dir -t deb -n '#{package_name}' -v #{build_number} --prefix=#{install_prefix} -p #{package_file_name} ."
   else
     puts "Building standard package"
-    system "bundle exec fpm -C deb -s dir -t deb -n '#{package_name}' -v #{build_number} --deb-no-default-config-files --deb-upstart #{PROJECT_ROOT}/debian/#{package_name}/upstart/#{package_name} --prefix=/ --after-install #{PROJECT_ROOT}/debian/#{package_name}/postinst.sh -p #{package_file_name} ."
+    system "bundle exec fpm -C deb -s dir -t deb -n '#{package_name}' -v #{build_number} --deb-no-default-config-files --deb-upstart #{PROJECT_ROOT}/debian/#{package_name}/upstart/#{package_name} --prefix=/ --after-install #{PROJECT_ROOT}/debian/#{package_name}/postinst.sh --depends python-httplib2 -p #{package_file_name} ."
   end
 
   unless $? == 0
