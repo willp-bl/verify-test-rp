@@ -10,8 +10,6 @@ html(lang="en")
   head
     meta(http-equiv="content-type", content="text/html; charset=UTF-8")
     title=pageTitle
-    script.
-      (function(){if(navigator.userAgent.match(/IEMobile\/10\.0/)){var d=document,c="appendChild",a=d.createElement("style");a[c](d.createTextNode("@-ms-viewport{width:auto!important}"));d.getElementsByTagName("head")[0][c](a);}})();
 
     +stylesheetLinkTag("govuk-template","screen")
     +stylesheetLinkTag("ida-sample-rp","screen")
@@ -31,8 +29,7 @@ html(lang="en")
     block headerScripts
   body(class="#{bodyClass}")
 
-    script.
-      document.documentElement.className = ((document.documentElement.className) ? document.documentElement.className + ' js-enabled' : 'js-enabled');
+    script(src='/assets/scripts/js-enabled.js')
 
     #skiplink-container
       div
