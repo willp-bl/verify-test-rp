@@ -14,6 +14,7 @@ import uk.gov.ida.integrationTest.support.JourneyHelper;
 import uk.gov.ida.integrationTest.support.RequestParamHelper;
 import uk.gov.ida.integrationTest.support.TestRpAppRule;
 import uk.gov.ida.jerseyclient.JerseyClientConfigurationBuilder;
+import uk.gov.ida.rp.testrp.MsaStubRule;
 import uk.gov.ida.rp.testrp.Urls;
 
 import javax.ws.rs.client.Client;
@@ -35,16 +36,17 @@ public class TestRpLoginResourceAppRuleTest extends IntegrationTestHelper {
     private static Client client;
     private static JourneyHelper journeyHelper;
 
+    private static MsaStubRule msaStubRule = new MsaStubRule();
+
     @ClassRule
     public static TestRpAppRule wantsHubSignatureTestRp = TestRpAppRule.newTestRpAppRule(
-            ConfigOverride.config("clientTrustStoreConfiguration.path", ResourceHelpers.resourceFilePath("ida_truststore.ts")),
-            ConfigOverride.config("msaMetadataUri", "https://localhost:"+getMsaStubRule().getSecurePort()+"/metadata"),
-            ConfigOverride.config("hubExpectedToSignAuthnResponse", "true"));
+            msaStubRule,
+            ConfigOverride.config("hubExpectedToSignAuthnResponse", "true")
+    );
 
     @ClassRule
     public static TestRpAppRule wantsNoHubSignatureTestRp = TestRpAppRule.newTestRpAppRule(
-            ConfigOverride.config("clientTrustStoreConfiguration.path", ResourceHelpers.resourceFilePath("ida_truststore.ts")),
-            ConfigOverride.config("msaMetadataUri", "https://localhost:"+getMsaStubRule().getSecurePort()+"/metadata"),
+            msaStubRule,
             ConfigOverride.config("hubExpectedToSignAuthnResponse", "false"));
 
     @BeforeClass
@@ -111,7 +113,7 @@ public class TestRpLoginResourceAppRuleTest extends IntegrationTestHelper {
         final String hashedPid = journeyHelper.doASuccessfulMatchInLocalMatchingService(wantsHubSignatureTestRp.uri(Urls.TestRpUrls.LOCAL_MATCHING_SERVICE_RESOURCE), requestParams.getRequestId().get());
 
         Form form = new Form();
-        form.param(Urls.Params.SAML_RESPONSE_PARAM, getSignedResponse(hashedPid));
+        form.param(Urls.Params.SAML_RESPONSE_PARAM, getSignedResponse(hashedPid, msaStubRule.METADATA_ENTITY_ID));
         form.param(Urls.Params.RELAY_STATE_PARAM, requestParams.getRelayState().get());
         Response response = client
                 .property(ClientProperties.FOLLOW_REDIRECTS, false)
@@ -132,7 +134,7 @@ public class TestRpLoginResourceAppRuleTest extends IntegrationTestHelper {
         final String hashedPid = journeyHelper.doASuccessfulMatchInLocalMatchingService(wantsHubSignatureTestRp.uri(Urls.TestRpUrls.LOCAL_MATCHING_SERVICE_RESOURCE), requestParams.getRequestId().get());
 
         Form form = new Form();
-        form.param(Urls.Params.SAML_RESPONSE_PARAM, getUnsignedResponse(hashedPid));
+        form.param(Urls.Params.SAML_RESPONSE_PARAM, getUnsignedResponse(hashedPid, msaStubRule.METADATA_ENTITY_ID));
         form.param(Urls.Params.RELAY_STATE_PARAM, requestParams.getRelayState().get());
         Response response = client
                 .property(ClientProperties.FOLLOW_REDIRECTS, false)
@@ -152,7 +154,7 @@ public class TestRpLoginResourceAppRuleTest extends IntegrationTestHelper {
         final String hashedPid = journeyHelper.doASuccessfulMatchInLocalMatchingService(wantsNoHubSignatureTestRp.uri(Urls.TestRpUrls.LOCAL_MATCHING_SERVICE_RESOURCE), requestParams.getRequestId().get());
 
         Form form = new Form();
-        form.param(Urls.Params.SAML_RESPONSE_PARAM, getSignedResponse(hashedPid));
+        form.param(Urls.Params.SAML_RESPONSE_PARAM, getSignedResponse(hashedPid, msaStubRule.METADATA_ENTITY_ID));
         form.param(Urls.Params.RELAY_STATE_PARAM, requestParams.getRelayState().get());
         Response response = client
                 .property(ClientProperties.FOLLOW_REDIRECTS, false)
@@ -173,7 +175,7 @@ public class TestRpLoginResourceAppRuleTest extends IntegrationTestHelper {
         final String hashedPid = journeyHelper.doASuccessfulMatchInLocalMatchingService(wantsNoHubSignatureTestRp.uri(Urls.TestRpUrls.LOCAL_MATCHING_SERVICE_RESOURCE), requestParams.getRequestId().get());
 
         Form form = new Form();
-        form.param(Urls.Params.SAML_RESPONSE_PARAM, getUnsignedResponse(hashedPid));
+        form.param(Urls.Params.SAML_RESPONSE_PARAM, getUnsignedResponse(hashedPid, msaStubRule.METADATA_ENTITY_ID));
         form.param(Urls.Params.RELAY_STATE_PARAM, requestParams.getRelayState().get());
         Response response = client
                 .property(ClientProperties.FOLLOW_REDIRECTS, false)
@@ -194,7 +196,7 @@ public class TestRpLoginResourceAppRuleTest extends IntegrationTestHelper {
         final String hashedPid = journeyHelper.doASuccessfulMatchInLocalMatchingService(wantsHubSignatureTestRp.uri(Urls.TestRpUrls.LOCAL_MATCHING_SERVICE_RESOURCE), requestParams.getRequestId().get());
 
         Form form = new Form();
-        form.param(Urls.Params.SAML_RESPONSE_PARAM, getSignedResponse(hashedPid));
+        form.param(Urls.Params.SAML_RESPONSE_PARAM, getSignedResponse(hashedPid, msaStubRule.METADATA_ENTITY_ID));
         form.param(Urls.Params.RELAY_STATE_PARAM, requestParams.getRelayState().get());
         Response response = client
                 .property(ClientProperties.FOLLOW_REDIRECTS, false)

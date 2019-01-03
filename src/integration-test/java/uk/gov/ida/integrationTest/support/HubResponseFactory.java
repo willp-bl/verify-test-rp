@@ -60,19 +60,19 @@ public class HubResponseFactory {
         return transformer.apply(response.build());
     }
 
-    public static String getSignedResponse(String hashedPid) throws MarshallingException, SignatureException {
-        return getResponse(true, false, hashedPid);
+    public static String getSignedResponse(String hashedPid, String issuerId) throws MarshallingException, SignatureException {
+        return getResponse(true, false, hashedPid, issuerId);
     }
 
-    public static String getUnsignedResponse(String hashedPid) throws MarshallingException, SignatureException {
-        return getResponse(false, false, hashedPid);
+    public static String getUnsignedResponse(String hashedPid, String issuerId) throws MarshallingException, SignatureException {
+        return getResponse(false, false, hashedPid, issuerId);
     }
 
-    public static String getUserAccountCreationResponse() throws MarshallingException, SignatureException {
-        return getResponse(true, true, UUID.randomUUID().toString());
+    public static String getUserAccountCreationResponse(String issuerId) throws MarshallingException, SignatureException {
+        return getResponse(true, true, UUID.randomUUID().toString(), issuerId);
     }
 
-    private static String getResponse(boolean signed, boolean addUserCreationAttributes, String hashedPid) throws MarshallingException, SignatureException {
+    private static String getResponse(boolean signed, boolean addUserCreationAttributes, String hashedPid, String issuerId) throws MarshallingException, SignatureException {
         String requestId = "a-request";
         AuthnStatement authnStatement = AuthnStatementBuilder.anAuthnStatement().build();
         final Subject mdsAssertionSubject = SubjectBuilder.aSubject().withNameId(buildNameID(hashedPid)).withSubjectConfirmation(SubjectConfirmationBuilder.aSubjectConfirmation().withSubjectConfirmationData(SubjectConfirmationDataBuilder.aSubjectConfirmationData().withInResponseTo(requestId).build()).build()).build();
@@ -89,7 +89,7 @@ public class HubResponseFactory {
                     AssertionBuilder.anAssertion()
                             .withId("assertion-1-id")
                             .addAuthnStatement(authnStatement)
-                            .withIssuer(IssuerBuilder.anIssuer().withIssuerId(TestEntityIds.TEST_RP_MS).build())
+                            .withIssuer(IssuerBuilder.anIssuer().withIssuerId(issuerId).build())
                             .withSubject(mdsAssertionSubject)
                             .addAttributeStatement(matchingDatasetAttributeStatement)
                             .withSignature(SignatureBuilder.aSignature().withSigningCredential(signingCredential).build())
@@ -99,7 +99,7 @@ public class HubResponseFactory {
                     AssertionBuilder.anAssertion()
                             .withId("assertion-1-id")
                             .addAuthnStatement(authnStatement)
-                            .withIssuer(IssuerBuilder.anIssuer().withIssuerId(TestEntityIds.TEST_RP_MS).build())
+                            .withIssuer(IssuerBuilder.anIssuer().withIssuerId(issuerId).build())
                             .withSubject(mdsAssertionSubject)
                             .withSignature(SignatureBuilder.aSignature().withSigningCredential(signingCredential).build())
                             .buildWithEncrypterCredential(encryptingCredential));

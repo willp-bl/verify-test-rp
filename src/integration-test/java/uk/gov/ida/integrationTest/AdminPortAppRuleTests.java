@@ -19,10 +19,7 @@ public class AdminPortAppRuleTests extends IntegrationTestHelper {
     private static Client client = JerseyClientBuilder.createClient().property(ClientProperties.FOLLOW_REDIRECTS, false);
 
     @ClassRule
-    public static TestRpAppRule testRp = TestRpAppRule.newTestRpAppRule(
-            ConfigOverride.config("clientTrustStoreConfiguration.path", ResourceHelpers.resourceFilePath("ida_truststore.ts")),
-            ConfigOverride.config("msaMetadataUri", "http://localhost:"+getMsaStubRule().getPort()+"/metadata"),
-            ConfigOverride.config("allowInsecureMetadataLocation", "true"));
+    public static TestRpAppRule testRp = TestRpAppRule.newTestRpAppRule();
 
     @Test
     public void ensureHealthCheckRegistered() {

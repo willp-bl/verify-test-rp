@@ -23,10 +23,7 @@ public class TestRpResourceAppRuleTests extends IntegrationTestHelper {
     private static Client client;
 
     @ClassRule
-    public static TestRpAppRule testRp = TestRpAppRule.newTestRpAppRule(
-            ConfigOverride.config("clientTrustStoreConfiguration.path", ResourceHelpers.resourceFilePath("ida_truststore.ts")),
-            ConfigOverride.config("msaMetadataUri", "http://localhost:"+getMsaStubRule().getPort()+"/metadata"),
-            ConfigOverride.config("allowInsecureMetadataLocation", "true"));
+    public static TestRpAppRule testRp = TestRpAppRule.newTestRpAppRule();
 
     @BeforeClass
     public static void beforeClass() {

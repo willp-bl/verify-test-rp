@@ -2,8 +2,6 @@ package uk.gov.ida.integrationTest;
 
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.client.JerseyClientConfiguration;
-import io.dropwizard.testing.ConfigOverride;
-import io.dropwizard.testing.ResourceHelpers;
 import org.glassfish.jersey.client.ClientProperties;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -13,6 +11,7 @@ import uk.gov.ida.integrationTest.support.JourneyHelper;
 import uk.gov.ida.integrationTest.support.RequestParamHelper;
 import uk.gov.ida.integrationTest.support.TestRpAppRule;
 import uk.gov.ida.jerseyclient.JerseyClientConfigurationBuilder;
+import uk.gov.ida.rp.testrp.MsaStubRule;
 import uk.gov.ida.rp.testrp.Urls;
 
 import javax.ws.rs.client.Client;
@@ -30,11 +29,10 @@ public class UserAccountCreationAppRuleTest extends IntegrationTestHelper {
     private static Client client;
     private static JourneyHelper journeyHelper;
 
+    private static MsaStubRule msaStubRule = new MsaStubRule();
+
     @ClassRule
-    public static TestRpAppRule testRp = TestRpAppRule.newTestRpAppRule(
-            ConfigOverride.config("clientTrustStoreConfiguration.path", ResourceHelpers.resourceFilePath("ida_truststore.ts")),
-            ConfigOverride.config("msaMetadataUri", "https://localhost:"+getMsaStubRule().getSecurePort()+"/metadata"),
-            ConfigOverride.config("hubExpectedToSignAuthnResponse", "true"));
+    public static TestRpAppRule testRp = TestRpAppRule.newTestRpAppRule(msaStubRule);
 
     @BeforeClass
     public static void beforeClass() {
@@ -52,7 +50,7 @@ public class UserAccountCreationAppRuleTest extends IntegrationTestHelper {
         journeyHelper.doASuccessfulMatchInLocalMatchingService(testRp.uri(Urls.TestRpUrls.LOCAL_MATCHING_SERVICE_RESOURCE), requestParams.getRequestId().get());
 
         Form form = new Form();
-        form.param(Urls.Params.SAML_RESPONSE_PARAM, getUserAccountCreationResponse());
+        form.param(Urls.Params.SAML_RESPONSE_PARAM, getUserAccountCreationResponse(msaStubRule.METADATA_ENTITY_ID));
         form.param(Urls.Params.RELAY_STATE_PARAM, requestParams.getRelayState().get());
         Response response = client
                 .property(ClientProperties.FOLLOW_REDIRECTS, false)

@@ -4,7 +4,6 @@ import org.glassfish.jersey.client.ClientProperties;
 import org.opensaml.core.xml.io.MarshallingException;
 import org.opensaml.xmlsec.signature.support.SignatureException;
 import org.w3c.dom.Document;
-import uk.gov.ida.common.SessionId;
 import uk.gov.ida.rp.testrp.Urls;
 import uk.gov.ida.rp.testrp.contract.MatchingServiceRequestDto;
 import uk.gov.ida.rp.testrp.contract.MatchingServiceResponseDto;
@@ -101,9 +100,9 @@ public class JourneyHelper {
                 .post(Entity.entity(matchingServiceRequest, MediaType.APPLICATION_JSON_TYPE), MatchingServiceResponseDto.class);
     }
 
-    public Response postSuccessAuthnResponseBackFromHub(URI uri, String hashedPid, String relayState) throws MarshallingException, SignatureException {
+    public Response postSuccessAuthnResponseBackFromHub(URI uri, String hashedPid, String relayState, String msaEntityId) throws MarshallingException, SignatureException {
         Form form = new Form();
-        form.param(Urls.Params.SAML_RESPONSE_PARAM, getSignedResponse(hashedPid));
+        form.param(Urls.Params.SAML_RESPONSE_PARAM, getSignedResponse(hashedPid, msaEntityId));
         form.param(Urls.Params.RELAY_STATE_PARAM, relayState);
         Response response = client
                 .property(ClientProperties.FOLLOW_REDIRECTS, false)

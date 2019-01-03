@@ -35,10 +35,7 @@ public class LocalMatchingServiceResourceAppRuleTests extends IntegrationTestHel
     private static JourneyHelper journeyHelper;
 
     @ClassRule
-    public static TestRpAppRule testRp = TestRpAppRule.newTestRpAppRule(
-        ConfigOverride.config("clientTrustStoreConfiguration.path", ResourceHelpers.resourceFilePath("ida_truststore.ts")),
-        ConfigOverride.config("msaMetadataUri", "http://localhost:"+getMsaStubRule().getPort()+"/metadata"),
-        ConfigOverride.config("allowInsecureMetadataLocation", "true"));
+    public static TestRpAppRule testRp = TestRpAppRule.newTestRpAppRule();
 
     @BeforeClass
     public static void beforeClass() {

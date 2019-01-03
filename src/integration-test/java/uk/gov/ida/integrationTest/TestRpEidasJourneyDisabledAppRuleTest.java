@@ -27,10 +27,8 @@ public class TestRpEidasJourneyDisabledAppRuleTest extends IntegrationTestHelper
 
     @ClassRule
     public static TestRpAppRule testRp = TestRpAppRule.newTestRpAppRule(
-        ConfigOverride.config("clientTrustStoreConfiguration.path", ResourceHelpers.resourceFilePath("ida_truststore.ts")),
-            ConfigOverride.config("msaMetadataUri", "http://localhost:"+getMsaStubRule().getPort()+"/metadata"),
-        ConfigOverride.config("shouldShowStartWithEidasButton", "false"),
-        ConfigOverride.config("allowInsecureMetadataLocation", "true"));
+        ConfigOverride.config("shouldShowStartWithEidasButton", "false")
+    );
 
     @BeforeClass
     public static void beforeClass() {

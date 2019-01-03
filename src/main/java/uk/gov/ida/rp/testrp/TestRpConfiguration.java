@@ -67,10 +67,6 @@ public class TestRpConfiguration extends Configuration implements AssetCacheConf
     @JsonProperty
     protected DeserializablePublicKeyConfiguration publicEncryptionCert;
 
-    @Valid
-    @JsonProperty
-    protected boolean allowInsecureMetadataLocation = false;
-
     @JsonProperty
     @NotNull
     @Valid
@@ -79,6 +75,10 @@ public class TestRpConfiguration extends Configuration implements AssetCacheConf
     @Valid
     @JsonProperty
     protected TrustStoreConfiguration clientTrustStoreConfiguration;
+
+    @Valid
+    @JsonProperty
+    protected TrustStoreConfiguration msaMetadataTrustStoreConfiguration;
 
     @NotNull
     @JsonProperty
@@ -168,10 +168,6 @@ public class TestRpConfiguration extends Configuration implements AssetCacheConf
 
     public DeserializablePublicKeyConfiguration getPublicEncryptionCert() { return publicEncryptionCert; }
 
-    public boolean getAllowInsecureMetadataLocation() {
-        return allowInsecureMetadataLocation;
-    }
-
     public boolean isHubExpectedToSignAuthnResponse() {
         return hubExpectedToSignAuthnResponse;
     }
@@ -226,6 +222,10 @@ public class TestRpConfiguration extends Configuration implements AssetCacheConf
 
     public int getTokenEpoch() {
         return tokenEpoch;
+    }
+
+    public TrustStoreConfiguration getMsaMetadataTrustStoreConfiguration() {
+        return msaMetadataTrustStoreConfiguration;
     }
 
 }

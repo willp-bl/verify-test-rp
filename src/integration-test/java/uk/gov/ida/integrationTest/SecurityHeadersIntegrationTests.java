@@ -21,10 +21,7 @@ public class SecurityHeadersIntegrationTests extends IntegrationTestHelper {
     private final Client client = JerseyClientBuilder.createClient().property(ClientProperties.FOLLOW_REDIRECTS, false);
 
     @ClassRule
-    public static final TestRpAppRule applicationRule = TestRpAppRule.newTestRpAppRule(
-            ConfigOverride.config("clientTrustStoreConfiguration.path", ResourceHelpers.resourceFilePath("ida_truststore.ts")),
-            ConfigOverride.config("msaMetadataUri", "http://localhost:"+getMsaStubRule().getPort()+"/metadata"),
-            ConfigOverride.config("allowInsecureMetadataLocation", "true"));
+    public static final TestRpAppRule applicationRule = TestRpAppRule.newTestRpAppRule();
 
     @Test
     public void securityHeaderTest() {
